@@ -1,6 +1,5 @@
 resource "aws_elb" "master" {
   name = "${var.pre_tag}-elb-master-${var.post_tag}"
-//  availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
 
   subnets = ["${var.public_subnet_id}"]
   security_groups = ["${var.public_security_group_id}"]
