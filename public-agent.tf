@@ -17,37 +17,13 @@ resource "aws_instance" "public-agent" {
   }
   root_block_device {
     volume_size = "${var.dcos_agent_disk_size}"
+    delete_on_termination = true
   }
   tags {
     Name = "${format("${var.pre_tag}-Public-Agent-%d-${var.post_tag}", count.index + 1)}"
   }
   provisioner "local-exec" {
-    command = "echo ${format("AGENT_%02d", count.index)}=\"${self.private_ip}\" >> ips.txt"
-  }
-  provisioner "local-exec" {
-    command = "./make-certs.sh"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo sysctl -w net.netfilter.nf_conntrack_tcp_be_liberal=1",
-      "sudo mkdir --parent /etc/privateregistry/certs/",
-      "sudo mkdir --parent /etc/docker/certs.d/192.168.0.1"
-    ]
-  }
-  provisioner "file" {
-    source = "./certs/domain.crt"
-    destination = "~/domain.crt"
-  }
-  provisioner "file" {
-    source = "./certs/domain.key"
-    destination = "~/domain.key"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo cp ~/domain.* /etc/privateregistry/certs/",
-      "sudo cp ~/domain.crt /etc/docker/certs.d/192.168.0.1/ca.crt",
-      "sudo systemctl restart docker"
-    ]
+    command = "echo ${format("AGENT_%02d", count.index + var.dcos_agent_count)}=\"${self.private_ip}\" >> ips.txt"
   }
 }
 

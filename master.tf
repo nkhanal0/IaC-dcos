@@ -1,7 +1,7 @@
 resource "aws_instance" "master" {
   ami = "${lookup(var.amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
-  instance_type = "m3.2xlarge"
+  instance_type = "m4.large"
   key_name = "${var.aws_key_name}"
   vpc_security_group_ids = [
     "${aws_security_group.private.id}"]
@@ -16,6 +16,7 @@ resource "aws_instance" "master" {
   }
   root_block_device {
     volume_size = "${var.dcos_master_disk_size}"
+    delete_on_termination = true
   }
   tags {
     Name = "${format("${var.pre_tag}-Master-%d-${var.post_tag}", count.index + 1)}"
