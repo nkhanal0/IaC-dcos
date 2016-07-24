@@ -96,3 +96,13 @@ variable "master_user_data" {
     "1" = "master-cloud-config.yaml"
   }
 }
+
+variable "instance_type" {
+  description = "DCOS instance type"
+  default = {
+    "bootstrap" = "m4.large"
+    "master" = "m4.large"
+    "public-agent" = "m3.2xlarge"
+    "agent" = "m4.large"
+  }
+}
