@@ -39,17 +39,4 @@ cat > ip-detect << FIN
 # ipv4 address
 curl -fsSL http://169.254.169.254/latest/meta-data/local-ipv4
 FIN
-
-# Make a script
-
-cat > do-install.sh << FIN
-#!/usr/bin/env bash
-mkdir /tmp/dcos && cd /tmp/dcos
-printf "Waiting for installer to appear at Bootstrap URL"
-until \$(curl -m 2 --connect-timeout 2 --output /dev/null --silent --head --fail http://$BOOTSTRAP:9999/dcos_install.sh); do
-    sleep 1
-done
-curl -O http://$BOOTSTRAP:9999/dcos_install.sh
-sudo bash dcos_install.sh \$1
-FIN
 #rm -rf ./ips.txt
