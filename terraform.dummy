@@ -13,7 +13,7 @@ registry_storage_s3_region = "ap-northeast-1"
 public_subnet_cidr = "10.0.0.0/24"
 pre_tag = "Dummy-Prod"
 post_tag = "Terra"
-
+aws_ssl_certificate_arn_id = ""
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
 dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"

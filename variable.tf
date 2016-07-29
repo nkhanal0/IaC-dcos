@@ -106,3 +106,8 @@ variable "instance_type" {
     "agent" = "m4.large"
   }
 }
+
+variable "aws_ssl_certificate_arn_id" {
+  description = "ARN ID of the ssl certificate created in Amazon"
+  default = ""
+}

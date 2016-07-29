@@ -13,57 +13,14 @@ resource "aws_elb" "master" {
   }
 
   listener {
-    instance_port = 22
-    instance_protocol = "tcp"
-    lb_port = 2222
-    lb_protocol = "tcp"
-  }
-
-  listener {
-    instance_port = 5050
-    instance_protocol = "http"
-    lb_port = 5050
-    lb_protocol = "http"
-  }
-
-  listener {
-    instance_port = 2181
-    instance_protocol = "tcp"
-    lb_port = 2181
-    lb_protocol = "tcp"
-  }
-
-  listener {
-    instance_port = 8181
-    instance_protocol = "http"
-    lb_port = 8181
-    lb_protocol = "http"
-  }
-
-  listener {
-    instance_port = 80
-    instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
-  }
-
-  listener {
     instance_port = 443
-    instance_protocol = "tcp"
-    lb_port = 443
-    lb_protocol = "tcp"
-  }
-
-  listener {
-    instance_port = 8080
-    instance_protocol = "http"
-    lb_port = 8080
-    lb_protocol = "http"
+    instance_protocol = "https"
+    lb_port            = 443
+    lb_protocol        = "https"
+    ssl_certificate_id = "${var.aws_ssl_certificate_arn_id}"
   }
 
   instances = ["${aws_instance.master.*.id}"]
-//  cross_zone_load_balancing = true
-//  idle_timeout = 400
   connection_draining = true
   connection_draining_timeout = 300
   tags {
