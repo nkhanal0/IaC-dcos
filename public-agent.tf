@@ -3,7 +3,7 @@ resource "aws_instance" "public-agent" {
   ami = "${lookup(var.amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
   instance_type = "${var.instance_type.public-agent}"
-  key_name = "${var.aws_key_name}"
+  key_name = "${var.key_pair_name}"
   vpc_security_group_ids = [
     "${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"
@@ -12,8 +12,7 @@ resource "aws_instance" "public-agent" {
   user_data = "${file("agent-cloud-config.yaml")}"
   connection {
     user = "core"
-    agent = false
-    private_key = "${file(var.aws_key_path)}"
+    agent = true
   }
   root_block_device {
     volume_size = "${var.dcos_agent_disk_size}"
@@ -33,8 +32,7 @@ resource "null_resource" "setup-public-agent" {
   connection {
     host = "${element(aws_instance.public-agent.*.private_ip, count.index)}"
     user = "core"
-    agent = false
-    private_key = "${file(var.aws_key_path)}"
+    agent = true
   }
   provisioner "file" {
     source = "./do-install.sh"

@@ -13,9 +13,12 @@ This terraform script with setup the DCOS cluster in AWS.
   - public_security_group_id
   - public_subnet_id
   - vpc_id
-  - aws_key_path
-  - aws_key_name
+  - key_pair_name  
+  We have an [Iac-manager][iac-manager] which can do this task.
 - Install terraform in the machine from [here][terraform-install].
+- Public Key Access with Agent support/ Agent Forwarding
+  ssh-add ~/.ssh/id_rsa
+  ssh -A user@ip
 
 #### Steps to install DCOS
 - Clone this repo .
