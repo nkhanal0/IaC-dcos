@@ -15,6 +15,7 @@ This terraform script with setup the DCOS cluster in AWS.
   - vpc_id
   - aws_key_path
   - aws_key_name
+  
   We have an [Iac-manager][iac-manager] which can do this task.
 - Install terraform in the machine from [here][terraform-install].
 
