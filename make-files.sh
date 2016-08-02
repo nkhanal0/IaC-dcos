@@ -13,15 +13,6 @@ master_list:
 - $MASTER_02
 - $MASTER_03
 - $MASTER_04
-agent_list:
-- $AGENT_00
-- $AGENT_01
-- $AGENT_02
-- $AGENT_03
-- $AGENT_04
-- $AGENT_05
-- $AGENT_06
-- $AGENT_07
 resolvers:
 - 8.8.4.4
 - 8.8.8.8

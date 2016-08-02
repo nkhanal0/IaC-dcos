@@ -8,19 +8,13 @@ resource "aws_instance" "public-agent" {
   source_dest_check = false
   count = "${var.dcos_public_agent_count}"
   user_data =  "${template_file.public_agent_user_data.rendered}"
-  connection {
-    user = "core"
-    agent = true
-  }
+
   root_block_device {
     volume_size = "${var.dcos_agent_disk_size}"
     delete_on_termination = true
   }
   tags {
     Name = "${format("${var.pre_tag}-Public-Agent-%d-${var.post_tag}", count.index + 1)}"
-  }
-  provisioner "local-exec" {
-    command = "echo ${format("AGENT_%02d", count.index + var.dcos_agent_count)}=\"${self.private_ip}\" >> ips.txt"
   }
 }
 

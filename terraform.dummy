@@ -21,3 +21,8 @@ dcos_master_count = "3"
 dcos_master_disk_size = 30
 dcos_agent_disk_size = 30
 
+/* AutoScaling Group Configuration */
+asg_max_size = 5
+asg_min_size = 1
+asg_desired_capacity = 3
+asg_health_check_grace_period = 300
