@@ -2,7 +2,7 @@ resource "aws_instance" "master" {
   ami = "${lookup(var.amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
   instance_type = "${var.instance_type.master}"
-  key_name = "${var.aws_key_name}"
+  key_name = "${var.key_pair_name}"
   vpc_security_group_ids = [
     "${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"
@@ -11,8 +11,7 @@ resource "aws_instance" "master" {
   user_data = "${file("${lookup(var.master_user_data, signum(count.index))}")}"
   connection {
     user = "core"
-    agent = false
-    private_key = "${file(var.aws_key_path)}"
+    agent = true
   }
   root_block_device {
     volume_size = "${var.dcos_master_disk_size}"
@@ -41,8 +40,7 @@ resource "null_resource" "setup-master" {
   connection {
     host = "${element(aws_instance.master.*.private_ip, count.index)}"
     user = "core"
-    agent = false
-    private_key = "${file(var.aws_key_path)}"
+    agent = true
   }
   provisioner "file" {
     source = "./do-install.sh"
