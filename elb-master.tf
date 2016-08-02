@@ -1,5 +1,5 @@
 resource "aws_elb" "master" {
-  name = "${var.pre_tag}-elb-master-${var.post_tag}"
+  name = "${var.pre_tag}-Master-ELB-${var.post_tag}"
 
   subnets = ["${var.public_subnet_id}"]
   security_groups = ["${var.public_security_group_id}"]
