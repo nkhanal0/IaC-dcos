@@ -107,3 +107,28 @@ variable "aws_ssl_certificate_arn_id" {
   default = ""
 }
 
+
+variable "asg_max_size" {
+  description = "The maximum size of the auto scale group (Max agent count)."
+  default = 5
+}
+
+variable "asg_min_size" {
+  description ="The minimum size of the auto scale group (Min agent count)."
+  default = 1
+}
+
+variable "asg_desired_capacity" {
+  description = "The number of Amazon EC2 instances (agents) that should be running in the group."
+  default = 3
+}
+
+variable "asg_health_check_grace_period" {
+  description = "After instance comes into service before checking health."
+  default = 300
+}
+
+variable "asg_health_check_type" {
+  description = "EC2 or ELB. Controls how health checking is done."
+  default = "EC2"
+}
