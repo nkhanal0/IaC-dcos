@@ -38,21 +38,6 @@ resource "aws_subnet" "availability-zone-private" {
   tags {
     Name = "${var.pre_tag}-Private-Subnet-${var.post_tag}"
   }
-  provisioner "local-exec" {
-    command = "sudo chmod +x make-cloud-config.sh"
-  }
-  provisioner "local-exec" {
-    command = "./make-cloud-config.sh"
-  }
-  provisioner "local-exec" {
-    command = "sed -i 's@PRIVATE_SUBNET_CIDR@\"${var.private_subnet_cidr}\"@g' master-cloud-config.yaml"
-  }
-  provisioner "local-exec" {
-    command = "sed -i 's@PRIVATE_SUBNET_CIDR@\"${var.private_subnet_cidr}\"@g' nfs-master-cloud-config.yaml"
-  }
-  provisioner "local-exec" {
-    command = "sed -i 's@NFS_ACCESS_ADDRESS@${var.nfs_access_address}@g' nfs-master-cloud-config.yaml"
-  }
 }
 
 resource "aws_eip" "nat" {

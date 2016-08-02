@@ -5,10 +5,9 @@ post_tag = "Terra"
 /* Secret */
 aws_access_key = "Dummy"
 aws_secret_key = "Dummy"
-aws_key_name   = "Dummy"           /* aws_key_name should be exactly as it is in your AWS */
-aws_key_path   = "./Dummy.pem"
 aws_region     = "ap-northeast-1"  /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
-aws_ssl_certificate_arn_id = ""
+aws_ssl_certificate_arn_id = "Dummy"
+key_pair_name   = "Dummy"
 
 registry_storage_s3_region = "ap-northeast-1"
 public_subnet_cidr = "10.0.0.0/24"

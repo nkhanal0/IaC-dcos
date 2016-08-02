@@ -6,21 +6,16 @@ resource "aws_instance" "bootstrap" {
   vpc_security_group_ids = ["${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"
   source_dest_check = false
-  depends_on = ["aws_instance.master", "aws_instance.agent", "aws_instance.public-agent"]
+
   tags {
     Name = "${var.pre_tag}-Bootstrap-${var.post_tag}"
   }
-  connection {
-    user = "centos"
-    agent = true
-  }
+
   root_block_device {
     volume_size = "10"
     delete_on_termination = true
   }
-  provisioner "local-exec" {
-    command = "rm -rf ./do-install.sh"
-  }
+
   provisioner "local-exec" {
     command = "echo BOOTSTRAP=\"${aws_instance.bootstrap.private_ip}\" >> ips.txt"
   }
@@ -33,12 +28,23 @@ resource "aws_instance" "bootstrap" {
   provisioner "local-exec" {
     command = "echo 77faa1f1-80aa-4a74-7bd1-53e90b8979c5 > UUID"
   }
+}
+
+
+resource "null_resource" "dcos-installation" {
+  connection {
+    host = "${aws_instance.bootstrap.private_ip}"
+    user = "centos"
+    agent = true
+  }
+
   provisioner "remote-exec" {
     inline = [
       "curl -O https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh",
-      "mkdir $HOME/genconf"
+      "rm -r $HOME/genconf; mkdir $HOME/genconf"
     ]
   }
+
   provisioner "local-exec" {
     command = "./make-files.sh"
   }
@@ -60,13 +66,15 @@ resource "aws_instance" "bootstrap" {
   provisioner "remote-exec" {
     inline = [
       "curl -fsSL https://get.docker.com/ | sh",
-      "sudo service docker start"
+      "sudo service docker start",
+      "sudo systemctl enable docker"
     ]
   }
   provisioner "remote-exec" {
     inline = [
       "sudo bash $HOME/dcos_generate_config.ee.sh",
-      "sudo docker run -d -p 9999:80 -v $HOME/genconf/serve:/usr/share/nginx/html:ro nginx 2>/dev/null"
+      "sudo docker run --restart=always -d -p 9999:80 -v $HOME/genconf/serve:/usr/share/nginx/html:ro nginx 2>/dev/null"
     ]
   }
 }
+

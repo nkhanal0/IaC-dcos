@@ -1,15 +1,13 @@
 resource "aws_instance" "public-agent" {
-  depends_on = ["aws_instance.master"]
   ami = "${lookup(var.amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
   instance_type = "${var.instance_type.public-agent}"
   key_name = "${var.key_pair_name}"
-  vpc_security_group_ids = [
-    "${aws_security_group.private.id}"]
+  vpc_security_group_ids = ["${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"
   source_dest_check = false
   count = "${var.dcos_public_agent_count}"
-  user_data = "${file("agent-cloud-config.yaml")}"
+  user_data =  "${template_file.public_agent_user_data.rendered}"
   connection {
     user = "core"
     agent = true
@@ -26,19 +24,17 @@ resource "aws_instance" "public-agent" {
   }
 }
 
-resource "null_resource" "setup-public-agent" {
-  count = "${var.dcos_public_agent_count}"
-  depends_on = ["aws_instance.bootstrap", "null_resource.setup-master"]
-  connection {
-    host = "${element(aws_instance.public-agent.*.private_ip, count.index)}"
-    user = "core"
-    agent = true
+resource "template_file" "public_agent_user_data" {
+  template = "${file(format("%s/files/user-data/agent-cloud-config.yaml.tpl", path.module))}"
+
+  vars {
+    bootstrap_url = "http://${aws_instance.bootstrap.private_ip}:9999"
+    private_subnet_cidr = "${var.private_subnet_cidr}"
+    nfs_server_ip = "${aws_instance.master.0.private_ip}"
+    role = "slave_public"
   }
-  provisioner "file" {
-    source = "./do-install.sh"
-    destination = "/tmp/do-install.sh"
-  }
-  provisioner "remote-exec" {
-    inline = "bash /tmp/do-install.sh slave_public"
+
+  lifecycle {
+    create_before_destroy = true
   }
 }

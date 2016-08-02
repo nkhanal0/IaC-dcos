@@ -20,9 +20,6 @@ variable "dcos_master_disk_size" {
 }
 variable "dcos_agent_disk_size" {
 }
-//variable "registry_storage_s3_bucket" {}
-//variable "registry_storage_s3_accesskey" {}
-//variable "registry_storage_s3_secretkey" {}
 
 variable "registry_storage_s3_region" {
   description = "Registry storage S3 region"
@@ -90,8 +87,8 @@ variable "dcos_installer_url" {
 variable "master_user_data" {
   description = "Master Cloud config files"
   default = {
-    "0" = "nfs-master-cloud-config.yaml"
-    "1" = "master-cloud-config.yaml"
+    "0" = "%s/files/user-data/nfs-master-cloud-config.yaml.tpl"
+    "1" = "%s/files/user-data/master-cloud-config.yaml.tpl"
   }
 }
 
@@ -109,3 +106,4 @@ variable "aws_ssl_certificate_arn_id" {
   description = "ARN ID of the ssl certificate created in Amazon"
   default = ""
 }
+
