@@ -1,5 +1,5 @@
 resource "aws_security_group" "private" {
-  name = "${var.pre_tag}-Mesos-Security-Private-${var.post_tag}"
+  name = "${var.pre_tag}-Security-Private-${var.post_tag}"
   description = "Allow incoming connections."
   ingress {
     from_port = 22

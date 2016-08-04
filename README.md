@@ -21,12 +21,22 @@ This terraform script with setup the DCOS cluster in AWS.
   ssh -A user@ip
 
 #### Steps to install DCOS
+- Add AWS credentials
+  Pass AWS credential variables to remote server, if running terraform from remote server.
+  `ssh -t -A user@ip AWS_ACCESS_KEY_ID="anaccesskey" AWS_SECRET_ACCESS_KEY="asecretkey" AWS_DEFAULT_REGION="ap-northeast-1" bash`
+  Or
+  Export AWS credentials as bash variables, if running terraform from local machine.
+```
+export AWS_ACCESS_KEY_ID="anaccesskey" 
+export AWS_SECRET_ACCESS_KEY="asecretkey"
+export AWS_DEFAULT_REGION="ap-northeast-1"
+```
 - Clone this repo .
 - Copy your AWS ssh key into current dir.
 - `cp terraform.dummy terraform.tfvars`
 - If you are using [IaC-Manager][iac-manager], run ```cat ~/terraform.out >> ~/IaC-dcos/terraform.tfvars``` once.
 - Modify params in `terraform.tfvars`
-- (Optional) Modify params in `variable.tf` to change subnet or add AMI accordingly to your aws region
+- (Optional) Modify params in `variable.tf` to change **default values** including subnet or add AMI accordingly to your aws region
 - Run `terraform plan` to see the plan to execute.
 - Run `terraform apply` to run the scripts.
 - You may have `prod/dev/stage` configurations in

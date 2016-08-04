@@ -1,6 +1,6 @@
 resource "aws_launch_configuration" "dcos_public_agent_lc" {
   name_prefix = "${var.pre_tag}-Public-Agent-AS-LC-"
-  image_id = "${lookup(var.amis, var.aws_region)}"
+  image_id = "${lookup(var.coreos_amis, var.aws_region)}"
   instance_type = "${var.instance_type.public-agent}"
   key_name = "${var.key_pair_name}"
   security_groups = ["${aws_security_group.private.id}"]
