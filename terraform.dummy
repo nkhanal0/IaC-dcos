@@ -1,28 +1,10 @@
 /* Cluster Name */
-pre_tag = "Dummy-Prod"
+pre_tag = "Testing"
 post_tag = "Terra"
 
 /* Secret */
-aws_access_key = "Dummy"
-aws_secret_key = "Dummy"
 aws_region     = "ap-northeast-1"             /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
-registry_storage_s3_region = "ap-northeast-1" /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
-aws_ssl_certificate_arn_id = "Dummy"
-public_subnet_cidr = "10.0.0.0/24"
+aws_ssl_certificate_arn_id = ""
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
-dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
-dcos_master_count = "3"
-dcos_master_disk_size = 30
-dcos_agent_disk_size = 30
-
-/* AutoScaling Group Configuration */
-agent_asg_max_size = 5
-agent_asg_min_size = 1
-agent_asg_desired_capacity = 3
-agent_asg_health_check_grace_period = 300
-public_agent_asg_max_size = 5
-public_agent_asg_min_size = 1
-public_agent_asg_desired_capacity = 3
-public_agent_asg_health_check_grace_period = 300

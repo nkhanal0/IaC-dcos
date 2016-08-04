@@ -40,7 +40,7 @@ resource "null_resource" "dcos-installation" {
 
   provisioner "remote-exec" {
     inline = [
-      "curl -O https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh",
+      "curl -O ${var.dcos_installer_url}",
       "rm -r $HOME/genconf; mkdir $HOME/genconf"
     ]
   }

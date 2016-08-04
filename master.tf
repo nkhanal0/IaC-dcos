@@ -1,5 +1,5 @@
 resource "aws_instance" "master" {
-  ami = "${lookup(var.amis, var.aws_region)}"
+  ami = "${lookup(var.coreos_amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
   instance_type = "${var.instance_type.master}"
   key_name = "${var.key_pair_name}"

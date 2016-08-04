@@ -1,10 +1,4 @@
-variable "aws_access_key" {
-}
-variable "aws_secret_key" {
-}
 variable "key_pair_name" {
-}
-variable "dcos_installer_url" {
 }
 variable "vpc_id" {
 }
@@ -17,20 +11,20 @@ variable "pre_tag" {
 variable "post_tag" {
 }
 variable "dcos_master_disk_size" {
+  description = "The size of Master node root block device disk in GB"
+  default = "30"
 }
 variable "dcos_agent_disk_size" {
-}
-
-variable "registry_storage_s3_region" {
-  description = "Registry storage S3 region"
+  description = "The size of Agent node root block device disk in GB"
+  default = "30"
 }
 
 variable "aws_region" {
   description = "EC2 Region for the VPC"
 }
 
-variable "amis" {
-  description = "CoreOS AMIs by region"
+variable "coreos_amis" {
+  description = "CoreOS AMIs by region used in master and agent nodes"
   default = {
     ap-northeast-1 = "ami-bc8778dd"
     ap-southeast-1 = "ami-40815d23"
@@ -38,7 +32,7 @@ variable "amis" {
 }
 
 variable "centos_amis" {
-  description = "CentOS AMIs by region"
+  description = "CentOS AMIs by region user in bootstrap node"
   default = {
     ap-southeast-1 = "ami-f068a193"
     ap-northeast-1 = "ami-eec1c380"
@@ -51,7 +45,7 @@ variable "dcos_cluster_name" {
 
 variable "dcos_master_count" {
   description = "Master count"
-  default = "1"
+  default = "3"
 }
 
 variable "vpc_cidr" {
@@ -87,7 +81,7 @@ variable "instance_type" {
   default = {
     "bootstrap" = "m4.large"
     "master" = "m4.large"
-    "public-agent" = "m3.2xlarge"
+    "public-agent" = "m4.large"
     "agent" = "m4.large"
   }
 }
@@ -100,22 +94,22 @@ variable "aws_ssl_certificate_arn_id" {
 
 variable "agent_asg_max_size" {
   description = "The maximum size of the auto scale group (Max agent count)."
-  default = 5
+  default = "5"
 }
 
 variable "agent_asg_min_size" {
   description ="The minimum size of the auto scale group (Min agent count)."
-  default = 1
+  default = "1"
 }
 
 variable "agent_asg_desired_capacity" {
   description = "The number of Amazon EC2 instances (agents) that should be running in the group."
-  default = 3
+  default = "3"
 }
 
 variable "agent_asg_health_check_grace_period" {
   description = "After instance comes into service before checking health."
-  default = 300
+  default = "300"
 }
 
 variable "agent_asg_health_check_type" {
@@ -125,22 +119,22 @@ variable "agent_asg_health_check_type" {
 
 variable "public_agent_asg_max_size" {
   description = "The maximum size of the auto scale group (Max public agent count)."
-  default = 5
+  default = "5"
 }
 
 variable "public_agent_asg_min_size" {
   description ="The minimum size of the auto scale group (Min public agent count)."
-  default = 1
+  default = "1"
 }
 
 variable "public_agent_asg_desired_capacity" {
   description = "The number of Amazon EC2 instances ( public agents) that should be running in the group."
-  default = 3
+  default = "3"
 }
 
 variable "public_agent_asg_health_check_grace_period" {
   description = "After instance comes into service before checking health."
-  default = 300
+  default = "300"
 }
 
 variable "public_agent_asg_health_check_type" {
