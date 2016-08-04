@@ -1,5 +1,5 @@
 ### IaC: DCOS
-This terraform script with setup the DCOS cluster in AWS.
+This terraform script will setup the DCOS cluster in AWS.
  - CentOS (Bootstrap Node)
  - CoreOS (Master and Agent Nodes)
  - Private subnet
@@ -21,11 +21,7 @@ This terraform script with setup the DCOS cluster in AWS.
   ssh -A user@ip
 
 #### Steps to install DCOS
-- Add AWS credentials
-  Pass AWS credential variables to remote server, if running terraform from remote server.
-  `ssh -t -A user@ip AWS_ACCESS_KEY_ID="anaccesskey" AWS_SECRET_ACCESS_KEY="asecretkey" AWS_DEFAULT_REGION="ap-northeast-1" bash`
-  Or
-  Export AWS credentials as bash variables, if running terraform from local machine.
+- Export AWS credentials as bash variables
 ```
 export AWS_ACCESS_KEY_ID="anaccesskey" 
 export AWS_SECRET_ACCESS_KEY="asecretkey"
