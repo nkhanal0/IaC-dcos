@@ -1,5 +1,5 @@
 output "agent_ips" {
-  value = "${file("agent_ips.txt")}"
+  value = "${null_resource.intermediates.triggers.agent_ips}"
 }
 output "private_subnet_id" {
   value = "${aws_subnet.availability-zone-private.id}"
@@ -7,17 +7,14 @@ output "private_subnet_id" {
 output "private_subnet_availability_zone" {
   value = "${aws_subnet.availability-zone-private.availability_zone}"
 }
-output "private_agent_ids" {
-  value = "${file("private_agent_ids.txt")}"
-}
 output "public_agent_ids" {
-  value = "${file("public_agent_ids.txt")}"
+  value = "${null_resource.intermediates.triggers.public_agent_ids}"
 }
 output "dcos_url" {
   value = "https://${aws_elb.master.dns_name}"
 }
 output "dcos_acs_token" {
-  value = "${file("dcos_acs_token")}"
+  value = "${null_resource.intermediates.triggers.dcos_acs_token}"
 }
 
 resource "template_file" "autoscaling_group_public_agent_instances_bash" {
@@ -28,11 +25,12 @@ resource "template_file" "autoscaling_group_public_agent_instances_bash" {
   }
 }
 
-resource "template_file" "autoscaling_group_agent_instances_bash" {
-  template = "${file("./files/bash/autoscaling_group_instances.bash.tpl")}"
-  vars {
-    autoscaling_group_name = "${aws_autoscaling_group.dcos_agent_asg.name}"
-    instance_id_output_file_name = "private_agent_ids.txt"
+resource "null_resource" "intermediates" {
+  depends_on = ["null_resource.retrieve-autoscaling-group-instances", "null_resource.dcos-cli-installation"]
+  triggers = {
+    agent_ips = "${file("agent_ips.txt")}"
+    public_agent_ids = "${file("public_agent_ids.txt")}"
+    dcos_acs_token = "${file("dcos_acs_token.txt")}"
   }
 }
 
@@ -44,13 +42,7 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
     command = "${template_file.autoscaling_group_public_agent_instances_bash.rendered}"
   }
   provisioner "local-exec" {
-    command = "${template_file.autoscaling_group_agent_instances_bash.rendered}"
-  }
-  provisioner "local-exec" {
     command = "agent_ips=$(<agent_ips.txt) && echo agent_ips = $agent_ips >> ../terraform.out"
-  }
-  provisioner "local-exec" {
-    command = "private_agent_ids=$(<private_agent_ids.txt) && echo private_agent_ids = $private_agent_ids >> ../terraform.out"
   }
   provisioner "local-exec" {
     command = "public_agent_ids=$(<public_agent_ids.txt) && echo public_agent_ids = $public_agent_ids >> ../terraform.out"
