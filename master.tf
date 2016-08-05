@@ -8,6 +8,7 @@ resource "aws_instance" "master" {
   source_dest_check = false
   count = "${var.dcos_master_count}"
   user_data =  "${element(template_file.master_user_data.*.rendered, count.index)}"
+  iam_instance_profile = "${aws_iam_instance_profile.s3_profile_master.name}"
 
   connection {
     user = "core"
