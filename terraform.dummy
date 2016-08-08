@@ -1,7 +1,13 @@
 /* AWS */
+pre_tag = "Testing"
+post_tag = "Terra"
+aws_region     = "ap-northeast-1"             /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
 aws_ssl_certificate_arn_id = ""
+key_pair_name = "dummy"
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
 dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
+dcos_username = "dummy"
+dcos_password = "dummy"
 

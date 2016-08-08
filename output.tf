@@ -1,9 +1,6 @@
 output "agent_ips" {
   value = "${file("agent_ips.txt")}"
 }
-output "master_elb_dns_name" {
-  value = "${aws_elb.master.dns_name}"
-}
 output "private_subnet_id" {
   value = "${aws_subnet.availability-zone-private.id}"
 }
@@ -15,6 +12,12 @@ output "private_agent_ids" {
 }
 output "public_agent_ids" {
   value = "${file("public_agent_ids.txt")}"
+}
+output "dcos_url" {
+  value = "https://${aws_elb.master.dns_name}"
+}
+output "dcos_acs_token" {
+  value = "${file("dcos_acs_token")}"
 }
 
 resource "template_file" "autoscaling_group_public_agent_instances_bash" {
@@ -58,10 +61,13 @@ resource "template_file" "dcos-cli-installation-script" {
   template = "${file("./files/bash/install_dcos_cli.tpl")}"
   vars {
     master_elb_dns_name = "${aws_elb.master.dns_name}"
+    dcos_username = "${var.dcos_username}"
+    dcos_password = "${var.dcos_password}"
   }
 }
 
 resource "null_resource" "dcos-cli-installation" {
+  depends_on = ["null_resource.dcos-installation"]
   provisioner "local-exec" {
     command = "${template_file.dcos-cli-installation-script.rendered}"
   }
