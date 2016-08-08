@@ -1,3 +1,22 @@
+output "agent_ips" {
+  value = "${file("agent_ips.txt")}"
+}
+output "master_elb_dns_name" {
+  value = "${aws_elb.master.dns_name}"
+}
+output "private_subnet_id" {
+  value = "${aws_subnet.availability-zone-private.id}"
+}
+output "private_subnet_availability_zone" {
+  value = "${aws_subnet.availability-zone-private.availability_zone}"
+}
+output "private_agent_ids" {
+  value = "${file("private_agent_ids.txt")}"
+}
+output "public_agent_ids" {
+  value = "${file("public_agent_ids.txt")}"
+}
+
 resource "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("./files/bash/autoscaling_group_instances.bash.tpl")}"
   vars {
@@ -35,21 +54,15 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
   }
 }
 
-output "agent_ips" {
-  value = "${file("agent_ips.txt")}"
+resource "template_file" "dcos-cli-installation-script" {
+  template = "${file("./files/bash/install_dcos_cli.tpl")}"
+  vars {
+    master_elb_dns_name = "${aws_elb.master.dns_name}"
+  }
 }
-output "master_elb_dns_name" {
-  value = "${aws_elb.master.dns_name}"
-}
-output "private_subnet_id" {
-  value = "${aws_subnet.availability-zone-private.id}"
-}
-output "private_subnet_availability_zone" {
-  value = "${aws_subnet.availability-zone-private.availability_zone}"
-}
-output "private_agent_ids" {
-  value = "${file("private_agent_ids.txt")}"
-}
-output "public_agent_ids" {
-  value = "${file("public_agent_ids.txt")}"
+
+resource "null_resource" "dcos-cli-installation" {
+  provisioner "local-exec" {
+    command = "${template_file.dcos-cli-installation-script.rendered}"
+  }
 }
