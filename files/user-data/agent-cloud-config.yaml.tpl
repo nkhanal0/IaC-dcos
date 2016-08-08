@@ -72,3 +72,19 @@ coreos:
         ExecStart=/bin/bash /tmp/dcos/dcos_install.sh ${role}
         [Install]
         WantedBy=multi-user.target
+    - name: |-
+        dcos-stop-systemmd-resolve.service
+      command: |-
+        start
+      content: |
+        [Unit]
+        Description=Stop system-md resolve
+        [Service]
+        WorkingDirectory=/tmp
+        Type=oneshot
+        StandardOutput=journal+console
+        StandardError=journal+console
+        ExecStart=/usr/bin/systemctl disable systemd-resolved
+        ExecStop=/usr/bin/systemctl stop systemd-resolved
+        [Install]
+        WantedBy=multi-user.target
