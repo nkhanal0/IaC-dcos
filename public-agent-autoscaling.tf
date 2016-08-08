@@ -5,6 +5,7 @@ resource "aws_launch_configuration" "dcos_public_agent_lc" {
   key_name = "${var.key_pair_name}"
   security_groups = ["${aws_security_group.private.id}"]
   user_data = "${template_file.public_agent_user_data.rendered}"
+  iam_instance_profile = "${aws_iam_instance_profile.s3_profile_public_agent.name}"
 
   root_block_device {
     volume_size = "${var.dcos_agent_disk_size}"
