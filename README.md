@@ -43,7 +43,8 @@ export AWS_DEFAULT_REGION="ap-northeast-1"
 
 #### Notes
 - The AWS key name, AWS key path, VPC, Subnet, Security Group will be updated to `terraform.dummy`
-and AWS ssh key will be copied to the current directory if an installation is done by [IaC-Manager][iac-manager].
+and AWS ssh key will be copied to the current directory if an installation is done by [IaC-Manager][iac-manager].  
+Terraform v0.7.0 or above is required.
 
 [iac-manager]: <https://github.com/microservices-today/IaC-manager>
 [terraform-install]: <https://www.terraform.io/intro/getting-started/install.html>
