@@ -27,3 +27,15 @@ resource "aws_elb" "master" {
     Name = "${var.pre_tag}-Master-${var.post_tag}"
   }
 }
+
+resource "aws_route53_record" "main_record" {
+  zone_id = "${var.hosted_zone_id}"
+  name = "${var.dns_record_name_pre_tag}.${var.domain_name}"
+  type = "A"
+
+  alias {
+    name = "${aws_elb.master.dns_name}"
+    zone_id = "${aws_elb.master.zone_id}"
+    evaluate_target_health = false
+  }
+}

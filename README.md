@@ -6,9 +6,9 @@ This terraform script will setup the DCOS cluster in AWS.
  - Public subnet
  - Internet gateway
 
-#### Pre-requisites (skip if you use [IaC-manager][iac-manager])
+#### Pre-requisites
 - An IAM account with administrator privileges.
-- An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
+- (skip if you use [IaC-manager][iac-manager]) An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
   We need the following information prior to starting the script.
   - public_security_group_id
   - public_subnet_id
@@ -22,6 +22,8 @@ This terraform script will setup the DCOS cluster in AWS.
   ssh-add <key_pair_name>.pem
   ssh -A centos@<manager_public_ip>
   ```
+- A hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancer.
+  - If you do not want to create a dns name for load balancer, remove the `aws_route53_record` resource from `elb-master.tf`
 
 #### Steps to install DCOS
 - Export AWS credentials as bash variables
