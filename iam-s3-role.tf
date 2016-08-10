@@ -1,5 +1,5 @@
 resource "aws_iam_role" "s3_role" {
-  name = "s3_role"
+  name = "${var.pre_tag}_s3_role_${var.post_tag}"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -15,7 +15,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "s3_access_policy" {
-  name = "s3_access_policy"
+  name = "${var.pre_tag}_s3_access_policy_${var.post_tag}"
   role = "${aws_iam_role.s3_role.id}"
   policy = <<EOF
 {
@@ -32,17 +32,17 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "s3_profile_master" {
-  name = "s3_profile_master"
+  name = "${var.pre_tag}s3_profile_master_${var.post_tag}"
   roles = ["${aws_iam_role.s3_role.name}"]
 }
 
 resource "aws_iam_instance_profile" "s3_profile_agents" {
-  name = "s3_profile_agents"
+  name = "${var.pre_tag}_s3_profile_agents_${var.post_tag}"
   roles = ["${aws_iam_role.s3_role.name}"]
 }
 
 resource "aws_iam_instance_profile" "s3_profile_public_agent" {
-  name = "s3_profile_public_agent"
+  name = "${var.pre_tag}_s3_profile_public_agent_${var.post_tag}"
   roles = ["${aws_iam_role.s3_role.name}"]
 }
 
