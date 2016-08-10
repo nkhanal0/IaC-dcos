@@ -3,5 +3,5 @@ aws_ssl_certificate_arn_id = ""
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
-
+dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
 
