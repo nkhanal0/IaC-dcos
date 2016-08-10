@@ -42,15 +42,16 @@ variable "centos_amis" {
 variable "dcos_cluster_name" {
   description = "DC/OS cluster name"
 }
+variable "dcos_username" {
+  description = "DC/OS Username"
+}
+variable "dcos_password" {
+  description = "DC/OS password"
+}
 
 variable "dcos_master_count" {
   description = "Master count"
   default = "3"
-}
-
-variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
-  default = "10.0.0.0/16"
 }
 
 variable "private_subnet_cidr" {

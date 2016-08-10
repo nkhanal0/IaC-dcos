@@ -19,8 +19,7 @@ resolvers:
 ssh_key_path: '/genconf/ssh_key'
 ssh_port: 22
 ssh_user: core
-superuser_username: kenta
-superuser_password_hash: $DCOS_SUPERUSER_PASSWORD_HASH
+superuser_username: $DCOS_USERNAME
 FIN
 
 cat > ip-detect << FIN
