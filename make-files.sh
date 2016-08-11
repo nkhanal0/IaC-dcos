@@ -29,4 +29,4 @@ cat > ip-detect << FIN
 # ipv4 address
 curl -fsSL http://169.254.169.254/latest/meta-data/local-ipv4
 FIN
-#rm -rf ./ips.txt
+rm -rf ./ips.txt
