@@ -11,3 +11,7 @@ dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate
 dcos_username = "dummy"
 dcos_password = "dummy"
 
+/* Hosted Zone Configuration */
+hosted_zone_id = "DUMMY"
+domain_name = "dummy.com"
+dns_record_name_pre_tag = "Dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */

@@ -32,7 +32,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "s3_profile_master" {
-  name = "${var.pre_tag}s3_profile_master_${var.post_tag}"
+  name = "${var.pre_tag}_s3_profile_master_${var.post_tag}"
   roles = ["${aws_iam_role.s3_role.name}"]
 }
 
