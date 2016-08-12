@@ -150,6 +150,6 @@ variable domain_name {
   description = "Name of the domain where record(s) need to create"
 }
 
-variable dns_record_name_pre_tag {
+variable dns_record_name {
   description = "Name of the record that you want to create for load balancer"
 }

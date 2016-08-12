@@ -1,7 +1,7 @@
 resource "aws_instance" "master" {
   ami = "${lookup(var.coreos_amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
-  instance_type = "${var.instance_type.master}"
+  instance_type = "${var.instance_type["master"]}"
   key_name = "${var.key_pair_name}"
   vpc_security_group_ids = [
     "${aws_security_group.private.id}"]

@@ -1,7 +1,7 @@
 resource "aws_instance" "bootstrap" {
   ami = "${lookup(var.centos_amis, var.aws_region)}"
   availability_zone = "${var.aws_region}a"
-  instance_type = "${var.instance_type.bootstrap}"
+  instance_type = "${var.instance_type["bootstrap"]}"
   key_name = "${var.key_pair_name}"
   vpc_security_group_ids = ["${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"

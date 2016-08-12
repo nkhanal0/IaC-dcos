@@ -17,7 +17,7 @@ output "dcos_acs_token" {
   value = "${null_resource.intermediates.triggers.dcos_acs_token}"
 }
 
-resource "template_file" "autoscaling_group_public_agent_instances_bash" {
+data "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("./files/bash/autoscaling_group_instances.bash.tpl")}"
   vars {
     autoscaling_group_name = "${aws_autoscaling_group.dcos_public_agent_asg.name}"
@@ -39,7 +39,7 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
     command = "sudo easy_install awscli"
   }
   provisioner "local-exec" {
-    command = "${template_file.autoscaling_group_public_agent_instances_bash.rendered}"
+    command = "${data.template_file.autoscaling_group_public_agent_instances_bash.rendered}"
   }
   provisioner "local-exec" {
     command = "agent_ips=$(<agent_ips.txt) && echo agent_ips = $agent_ips >> ../terraform.out"
@@ -49,7 +49,7 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
   }
 }
 
-resource "template_file" "dcos-cli-installation-script" {
+data "template_file" "dcos-cli-installation-script" {
   template = "${file("./files/bash/install_dcos_cli.tpl")}"
   vars {
     master_elb_dns_name = "${aws_elb.master.dns_name}"
@@ -61,6 +61,6 @@ resource "template_file" "dcos-cli-installation-script" {
 resource "null_resource" "dcos-cli-installation" {
   depends_on = ["null_resource.dcos-installation"]
   provisioner "local-exec" {
-    command = "${template_file.dcos-cli-installation-script.rendered}"
+    command = "${data.template_file.dcos-cli-installation-script.rendered}"
   }
 }

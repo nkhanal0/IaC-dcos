@@ -1,10 +1,10 @@
 resource "aws_launch_configuration" "dcos_public_agent_lc" {
   name_prefix = "${var.pre_tag}-Public-Agent-AS-LC-"
   image_id = "${lookup(var.coreos_amis, var.aws_region)}"
-  instance_type = "${var.instance_type.public-agent}"
+  instance_type = "${var.instance_type["public-agent"]}"
   key_name = "${var.key_pair_name}"
   security_groups = ["${aws_security_group.private.id}"]
-  user_data = "${template_file.public_agent_user_data.rendered}"
+  user_data = "${data.template_file.public_agent_user_data.rendered}"
   iam_instance_profile = "${aws_iam_instance_profile.s3_profile_public_agent.name}"
 
   root_block_device {
