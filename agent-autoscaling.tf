@@ -33,6 +33,21 @@ resource "aws_autoscaling_group" "dcos_agent_asg" {
     value = "${var.pre_tag}-Agent-${var.post_tag}"
     propagate_at_launch = true
   }
+  tag {
+    key = "Service"
+    value = "${var.tag_service}"
+    propagate_at_launch = true
+  }
+  tag {
+    key = "Environment"
+    value = "${var.tag_environment}"
+    propagate_at_launch = true
+  }
+  tag {
+    key = "Version"
+    value = "${var.tag_version}"
+    propagate_at_launch = true
+  }
 
   lifecycle {
     create_before_destroy = true

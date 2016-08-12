@@ -1,6 +1,9 @@
 /* AWS */
 pre_tag = "Testing"
 post_tag = "Terra"
+tag_service = "DCOS 1.73"
+tag_environment = "Staging"
+tag_version = "1.02"
 aws_region     = "ap-northeast-1"             /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
 aws_ssl_certificate_arn_id = ""
 key_pair_name = "dummy"

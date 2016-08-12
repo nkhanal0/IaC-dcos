@@ -23,6 +23,9 @@ resource "aws_instance" "master" {
 
   tags {
     Name = "${format("${var.pre_tag}-Master-%d-${var.post_tag}", count.index + 1)}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
   provisioner "local-exec" {
     command = "echo ${format("MASTER_%02d", count.index)}=\"${self.private_ip}\" >> ips.txt"
