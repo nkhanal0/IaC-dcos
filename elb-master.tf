@@ -20,6 +20,13 @@ resource "aws_elb" "master" {
     ssl_certificate_id = "${var.aws_ssl_certificate_arn_id}"
   }
 
+  listener {
+    instance_port = 80
+    instance_protocol = "http"
+    lb_port            = 80
+    lb_protocol        = "http"
+  }
+
   instances = ["${aws_instance.master.*.id}"]
   connection_draining = true
   connection_draining_timeout = 300

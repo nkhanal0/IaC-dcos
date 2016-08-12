@@ -77,7 +77,7 @@ resource "null_resource" "dcos-installation" {
       "curl -fsSL https://get.docker.com/ | sh",
       "sudo service docker start",
       "sudo systemctl enable docker",
-      "sudo bash dcos_generate_config.ee.sh --hash-password 123456 > secret_hash",
+      "sudo bash dcos_generate_config.ee.sh --hash-password ${"var.dcos_password"} > secret_hash",
       "sed -i -n '$p' secret_hash",
       "echo 'superuser_password_hash:' $(cat $HOME/secret_hash) >> $HOME/genconf/config.yaml",
       "sudo bash $HOME/dcos_generate_config.ee.sh",
