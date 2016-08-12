@@ -10,6 +10,15 @@ variable "pre_tag" {
 }
 variable "post_tag" {
 }
+variable "tag_service" {
+  description = "Service tag"
+}
+variable "tag_environment" {
+  description = "Environment tag"
+}
+variable "tag_version" {
+  description = "Version tag"
+}
 variable "dcos_master_disk_size" {
   description = "The size of Master node root block device disk in GB"
   default = "30"

@@ -32,6 +32,9 @@ resource "aws_elb" "master" {
   connection_draining_timeout = 300
   tags {
     Name = "${var.pre_tag}-Master-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
 }
 

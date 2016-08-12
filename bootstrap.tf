@@ -9,6 +9,9 @@ resource "aws_instance" "bootstrap" {
 
   tags {
     Name = "${var.pre_tag}-Bootstrap-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
 
   root_block_device {
@@ -41,6 +44,7 @@ resource "aws_instance" "bootstrap" {
 
 
 resource "null_resource" "dcos-installation" {
+  depends_on = ["aws_route_table_association.availability-zone-private"]
   connection {
     host = "${aws_instance.bootstrap.private_ip}"
     user = "centos"
@@ -77,7 +81,7 @@ resource "null_resource" "dcos-installation" {
       "curl -fsSL https://get.docker.com/ | sh",
       "sudo service docker start",
       "sudo systemctl enable docker",
-      "sudo bash dcos_generate_config.ee.sh --hash-password ${"var.dcos_password"} > secret_hash",
+      "sudo bash dcos_generate_config.ee.sh --hash-password ${var.dcos_password} > secret_hash",
       "sed -i -n '$p' secret_hash",
       "echo 'superuser_password_hash:' $(cat $HOME/secret_hash) >> $HOME/genconf/config.yaml",
       "sudo bash $HOME/dcos_generate_config.ee.sh",

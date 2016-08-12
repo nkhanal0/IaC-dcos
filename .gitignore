@@ -47,3 +47,8 @@ terraform.tfvars*
 
 # Ignore .pem ssh files from source code
 *.pem
+
+# Ignore files to store temporary values
+agent_ips.txt
+dcos_acs_token.txt
+public_agent_ids.txt

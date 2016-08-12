@@ -27,7 +27,10 @@ resource "aws_security_group" "private" {
   }
   vpc_id = "${var.vpc_id}"
   tags {
-      Name = "${var.pre_tag}-Private-SG-${var.post_tag}"
+    Name = "${var.pre_tag}-Private-SG-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
 }
 
@@ -37,6 +40,9 @@ resource "aws_subnet" "availability-zone-private" {
   availability_zone = "${var.aws_region}a"
   tags {
     Name = "${var.pre_tag}-Private-Subnet-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
 }
 
@@ -59,6 +65,9 @@ resource "aws_route_table" "availability-zone-private" {
 
   tags {
     Name = "${var.pre_tag}-Private-Subnet-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
   }
 }
 
