@@ -40,6 +40,9 @@ resource "aws_instance" "bootstrap" {
   provisioner "local-exec" {
     command = "echo 'private_subnet_id = \"${aws_subnet.availability-zone-private.id}\"' >> ../terraform.out"
   }
+  provisioner "local-exec" {
+    command = "echo 's3_bucket_name = \"${aws_s3_bucket.cluster-storage.bucket}\"' >> ../terraform.out"
+  }
 }
 
 

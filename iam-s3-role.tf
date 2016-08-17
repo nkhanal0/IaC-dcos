@@ -20,13 +20,22 @@ resource "aws_iam_role_policy" "s3_access_policy" {
   policy = <<EOF
 {
   "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "s3:*",
-      "Resource": "arn:aws:s3:::*"
-    }
-  ]
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.cluster-storage.bucket}"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": "arn:aws:s3:::${aws_s3_bucket.cluster-storage.bucket}/*"
+        }
+    ]
 }
 EOF
 }

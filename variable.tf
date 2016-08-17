@@ -151,14 +151,18 @@ variable "public_agent_asg_health_check_type" {
   description = "EC2 or ELB. Controls how health checking is done."
   default = "EC2"
 }
-variable hosted_zone_id {
+variable "hosted_zone_id" {
   description = "ID for the domain hosted zone"
 }
 
-variable domain_name {
+variable "domain_name" {
   description = "Name of the domain where record(s) need to create"
 }
 
-variable dns_record_name {
+variable "dns_record_name" {
   description = "Name of the record that you want to create for load balancer"
+}
+
+variable "s3_bucket_name" {
+  description = "AWS S3 Bucket name"
 }
