@@ -88,3 +88,36 @@ coreos:
         ExecStop=/usr/bin/systemctl stop systemd-resolved
         [Install]
         WantedBy=multi-user.target
+    - name: docker-cert-script.service
+      drop-ins:
+        - name: certificate-download-script.sh
+          content: |
+            #!/bin/bash
+            RESPONSE=300;
+            RESPONSE=$(curl --write-out "%{http_code}\n" --silent --output /dev/null "${bootstrap_url}/domain.crt")
+            if [ "$RESPONSE" = "200" ]; then
+               sudo sysctl -w net.netfilter.nf_conntrack_tcp_be_liberal=1
+               sudo mkdir --parent /etc/privateregistry/certs/
+               sudo mkdir --parent /etc/docker/certs.d/192.168.0.1
+               mkdir --parent /tmp/docker-certs
+               sudo curl -o /tmp/docker-certs/domain.crt ${bootstrap_url}/domain.crt
+               sudo curl -o /tmp/docker-certs/domain.key ${bootstrap_url}/domain.key
+               sudo cp /tmp/docker-certs/*  /etc/privateregistry/certs/
+               sudo cp /tmp/docker-certs/domain.crt /etc/docker/certs.d/192.168.0.1/ca.crt
+               sudo systemctl restart docker
+               sleep 1
+            fi
+    - name: |-
+        docker-cert-downloader.service
+      command: |-
+        start
+      content: |
+        [Unit]
+        Description=Download start script
+        After=docker-cert-script.service
+        Wants=docker-cert-script.service
+        [Service]
+        Type=oneshot
+        StandardOutput=journal+console
+        StandardError=journal+console
+        ExecStart=/bin/bash /etc/systemd/system/docker-cert-script.service.d/certificate-download-script.sh

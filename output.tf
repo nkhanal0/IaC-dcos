@@ -16,6 +16,9 @@ output "dcos_url" {
 output "dcos_acs_token" {
   value = "${null_resource.intermediates.triggers.dcos_acs_token}"
 }
+output "bootstrap_ip" {
+  value = "${aws_instance.bootstrap.private_ip}"
+}
 
 data "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("./files/bash/autoscaling_group_instances.bash.tpl")}"
@@ -47,6 +50,9 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
   }
   provisioner "local-exec" {
     command = "public_agent_ids=$(<public_agent_ids.txt) && echo public_agent_ids = $public_agent_ids >> ../terraform.out"
+  }
+  provisioner "local-exec" {
+    command = "echo bootstrap_ip = \"${aws_instance.bootstrap.private_ip}\" >> ../terraform.out"
   }
 }
 
