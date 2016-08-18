@@ -38,9 +38,9 @@ resource "aws_elb" "master" {
   }
 }
 
-resource "aws_route53_record" "main_record" {
+resource "aws_route53_record" "master_record" {
   zone_id = "${var.hosted_zone_id}"
-  name = "${var.dns_record_name}.${var.domain_name}"
+  name = "${var.master_dns_record_name}.${var.domain_name}"
   type = "A"
 
   alias {

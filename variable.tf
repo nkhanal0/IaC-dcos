@@ -159,7 +159,11 @@ variable "domain_name" {
   description = "Name of the domain where record(s) need to create"
 }
 
-variable "dns_record_name" {
+variable "master_dns_record_name" {
+  description = "Name of the record that you want to create for load balancer"
+}
+
+variable "tyk_dns_record_name" {
   description = "Name of the record that you want to create for load balancer"
 }
 

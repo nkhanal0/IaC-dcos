@@ -18,4 +18,5 @@ dcos_password = "dummy"
 /* Hosted Zone Configuration */
 hosted_zone_id = "DUMMY"
 domain_name = "dummy.com"
-dns_record_name = "Dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */
+master_dns_record_name = "Dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */
+tyk_dns_record_name = "Dummy" /* eg: dcos-app, then record name would be dcos-app.dummy.com */
