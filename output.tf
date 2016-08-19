@@ -14,7 +14,7 @@ output "public_agent_ids" {
   value = "${trimspace(null_resource.intermediates.triggers.public_agent_ids)}"
 }
 output "dcos_url" {
-  value = "https://${aws_elb.master.dns_name}"
+  value = "http://${aws_elb.master.dns_name}"
 }
 output "dcos_acs_token" {
   value = "${trimspace(null_resource.intermediates.triggers.dcos_acs_token)}"
