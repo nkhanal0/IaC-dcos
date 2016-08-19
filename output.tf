@@ -48,9 +48,7 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
   provisioner "local-exec" {
     command = "${data.template_file.autoscaling_group_public_agent_instances_bash.rendered}"
   }
-  provisioner "local-exec" {
-    command = "echo bootstrap_ip = \"${aws_instance.bootstrap.private_ip}\" >> ../terraform.out"
-  }
+
 }
 
 data "template_file" "dcos-cli-installation-script" {
