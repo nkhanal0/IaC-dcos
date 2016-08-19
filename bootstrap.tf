@@ -41,8 +41,13 @@ resource "aws_instance" "bootstrap" {
     command = "echo 'private_subnet_id = \"${aws_subnet.availability-zone-private.id}\"' >> ../terraform.out"
   }
   provisioner "local-exec" {
-    command = "echo 's3_bucket_name = \"${aws_s3_bucket.cluster-storage.bucket}\"' >> ../terraform.out"
     command = "echo 'agent_count = \"${var.public_agent_asg_desired_capacity + var.agent_asg_desired_capacity}\"' >> ../terraform.out"
+  }
+  provisioner "local-exec" {
+    command = "echo 's3_bucket_name = \"${aws_s3_bucket.cluster-storage.bucket}\"' >> ../terraform.out"
+  }
+  provisioner "local-exec" {
+    command = "echo 'bootstrap_ip = \"${aws_instance.bootstrap.private_ip}\"' >> ../terraform.out"
   }
 }
 
