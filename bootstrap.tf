@@ -42,6 +42,7 @@ resource "aws_instance" "bootstrap" {
   }
   provisioner "local-exec" {
     command = "echo 's3_bucket_name = \"${aws_s3_bucket.cluster-storage.bucket}\"' >> ../terraform.out"
+    command = "echo 'agent_count = \"${var.public_agent_asg_desired_capacity + var.agent_asg_desired_capacity}\"' >> ../terraform.out"
   }
 }
 
@@ -62,7 +63,7 @@ resource "null_resource" "dcos-installation" {
   }
 
   provisioner "local-exec" {
-    command = "./make-files.sh"
+    command = "${path.module}/make-files.sh"
   }
   provisioner "local-exec" {
     command = "sed -i -e '/^- *$/d' ./config.yaml"

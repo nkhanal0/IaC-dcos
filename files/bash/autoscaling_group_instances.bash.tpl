@@ -10,5 +10,7 @@ for i in `aws autoscaling describe-auto-scaling-groups --auto-scaling-group-name
 do
 aws ec2 describe-instances --instance-ids $i | grep -i PrivateIpAddress | awk '{ print $2 }' | head -1 | cut -d"," -f1 | tr -d '"' | tr '\n' ',' >> agent_ips.txt;
 done;
-sed -i 's/,$//' agent_ips.txt && echo \"$(cat agent_ips.txt)\" > agent_ips.txt
-sed -i 's/,$//' ${instance_id_output_file_name} && echo \"$(cat ${instance_id_output_file_name})\" > ${instance_id_output_file_name}
+sed -i 's/,$//' agent_ips.txt && echo agent_ips = \"$(cat agent_ips.txt)\" >> $HOME/terraform.out
+echo $(cat agent_ips.txt) > agent_ips.txt
+sed -i 's/,$//' ${instance_id_output_file_name} && echo public_agent_ids = \"$(cat ${instance_id_output_file_name})\" >> $HOME/terraform.out
+echo $(cat ${instance_id_output_file_name}) > ${instance_id_output_file_name}
