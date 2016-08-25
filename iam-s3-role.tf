@@ -39,6 +39,24 @@ resource "aws_iam_role_policy" "s3_access_policy" {
 }
 EOF
 }
+resource "aws_iam_role_policy" "ecr_access_policy" {
+  name = "${var.pre_tag}_ecr_access_policy_${var.post_tag}"
+  role = "${aws_iam_role.s3_role.id}"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ecr:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+}
+EOF
+}
 
 resource "aws_iam_instance_profile" "s3_profile_master" {
   name = "${var.pre_tag}_s3_profile_master_${var.post_tag}"
