@@ -41,6 +41,8 @@ resource "template_file" "master_user_data" {
     private_subnet_cidr = "${var.private_subnet_cidr}"
     nfs_access_address = "${var.nfs_access_address}"
     role = "master"
+    logstash_uri = "${aws_elb.logstash.dns_name}:80"
+    filebeat_image = "${var.filebeat_docker_image}"
   }
 
   lifecycle {

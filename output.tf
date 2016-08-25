@@ -22,6 +22,15 @@ output "dcos_acs_token" {
 output "bootstrap_ip" {
   value = "${aws_instance.bootstrap.private_ip}"
 }
+output "private_security_group_id" {
+  value = "${aws_security_group.private.id}"
+}
+output "nat_gateway_public_ip" {
+  value = "${aws_nat_gateway.nat.public_ip}"
+}
+output "elb_logstash_id" {
+  value = "${aws_elb.logstash.id}"
+}
 
 data "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("${path.module}/files/bash/autoscaling_group_instances.bash.tpl")}"

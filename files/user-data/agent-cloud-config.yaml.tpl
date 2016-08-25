@@ -28,6 +28,26 @@ coreos:
        What=${nfs_server_ip}:/home/core/jenkins_nfs
        Where=/var/jenkins_nfs
        Type=nfs
+    - name: |-
+        filebeat-docker.service
+      command: |-
+        start
+      content: |
+        [Unit]
+        Description=Filebeat
+        After=docker.service
+        Requires=docker.service
+        [Service]
+        TimeoutStartSec=0
+        ExecStartPre=-/bin/sh -c "docker kill %p"
+        ExecStartPre=-/bin/sh -c "docker rm -f %p 2> /dev/null"
+        ExecStartPre=/bin/sh -c "docker pull ${filebeat_image}"
+        ExecStart=/bin/sh -c "docker run --rm --name %p --privileged -v /var/log/mesos:/var/log/mesos -e "LOGSTASH_URI=${logstash_uri}" ${filebeat_image}"
+        ExecStop=/bin/sh -c "docker stop %p"
+        RestartSec=5
+        Restart=always
+        [X-Fleet]
+        Global=true
     - name: dcos-config-script.service
       drop-ins:
         - name: config-download-script.sh

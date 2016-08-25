@@ -170,3 +170,8 @@ variable "tyk_dns_record_name" {
 variable "s3_bucket_name" {
   description = "AWS S3 Bucket name"
 }
+
+variable "filebeat_docker_image" {
+  description = "Filebeat docker image form public docker registry"
+  default= "vysakhqb/filebeat"
+}
