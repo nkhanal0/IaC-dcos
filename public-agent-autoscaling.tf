@@ -32,7 +32,7 @@ resource "aws_autoscaling_group" "dcos_public_agent_asg" {
   availability_zones = ["${var.aws_region}a"]
   vpc_zone_identifier = ["${aws_subnet.availability-zone-private.id}"]
 
-  load_balancers = ["${aws_elb.tyk.name}"]
+  target_group_arns = ["${aws_alb_target_group.dcos-public-agents.arn}"]
 
   force_delete = true
 

@@ -46,6 +46,18 @@ resource "aws_subnet" "availability-zone-private" {
   }
 }
 
+resource "aws_subnet" "additional_subnet" {
+  vpc_id = "${var.vpc_id}"
+  cidr_block = "10.0.3.0/24"
+  availability_zone = "${var.additional_subnet_availability_zone}"
+  tags {
+    Name = "${var.pre_tag}-addiitional-Subnet-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
+  }
+}
+
 resource "aws_eip" "nat" {
   vpc = true
 }
