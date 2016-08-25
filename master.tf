@@ -3,8 +3,7 @@ resource "aws_instance" "master" {
   availability_zone = "${var.aws_region}a"
   instance_type = "${var.instance_type["master"]}"
   key_name = "${var.key_pair_name}"
-  vpc_security_group_ids = [
-    "${aws_security_group.private.id}"]
+  vpc_security_group_ids = ["${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.availability-zone-private.id}"
   source_dest_check = false
   count = "${var.dcos_master_count}"
@@ -48,4 +47,11 @@ resource "template_file" "master_user_data" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_alb_target_group_attachment" "dcos-master-instances" {
+  count            = 3
+  target_group_arn = "${element(aws_alb_target_group.dcos-masters.*.arn, count.index)}"
+  target_id        = "${element(aws_instance.master.*.id, count.index)}"
+  port             = 80
 }
