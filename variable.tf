@@ -175,7 +175,7 @@ variable "s3_bucket_name" {
 
 variable "filebeat_docker_image" {
   description = "Filebeat docker image form public docker registry"
-  default= "vysakhqb/filebeat"
+  default= "microservicestoday/filebeat"
 }
 
 variable "additional_subnet_availability_zone" {
