@@ -1,10 +1,10 @@
 resource "aws_instance" "bootstrap" {
   ami = "${lookup(var.centos_amis, var.aws_region)}"
-  availability_zone = "${var.aws_region}a"
+  availability_zone = "${data.aws_availability_zones.available.names[0]}"
   instance_type = "${var.instance_type["bootstrap"]}"
   key_name = "${var.key_pair_name}"
   vpc_security_group_ids = ["${aws_security_group.private.id}"]
-  subnet_id = "${aws_subnet.availability-zone-private.id}"
+  subnet_id = "${aws_subnet.private-primary.id}"
   source_dest_check = false
 
   tags {
@@ -35,10 +35,10 @@ resource "aws_instance" "bootstrap" {
     command = "echo 'private_security_group_id = \"${aws_security_group.private.id}\"' >> ../terraform.out"
   }
   provisioner "local-exec" {
-    command = "echo 'private_subnet_az = \"${aws_subnet.availability-zone-private.availability_zone}\"' >> ../terraform.out"
+    command = "echo 'private_subnet_az = \"${aws_subnet.private-primary.availability_zone}\"' >> ../terraform.out"
   }
   provisioner "local-exec" {
-    command = "echo 'private_subnet_id = \"${aws_subnet.availability-zone-private.id}\"' >> ../terraform.out"
+    command = "echo 'private_subnet_id = \"${aws_subnet.private-primary.id}\"' >> ../terraform.out"
   }
   provisioner "local-exec" {
     command = "echo 'agent_count = \"${var.public_agent_asg_desired_capacity + var.agent_asg_desired_capacity}\"' >> ../terraform.out"

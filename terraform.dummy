@@ -1,4 +1,7 @@
 /* AWS */
+vpc_id = "dummy"
+public_subnet_id = "dummy"
+public_security_group_id = "dummy"
 pre_tag = "Testing"
 post_tag = "Terra"
 tag_service = "DCOS 1.73"
@@ -20,6 +23,3 @@ hosted_zone_id = "DUMMY"
 domain_name = "dummy.com"
 master_dns_record_name = "Dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */
 tyk_dns_record_name = "Dummy" /* eg: dcos-app, then record name would be dcos-app.dummy.com */
-
-/*Provide availability zone for additional subnet*/
-additional_subnet_availability_zone = "Dummy" /* eg: ap-northeast-1c for Tokyo, ap-southeast-1b for SG */
