@@ -177,7 +177,3 @@ variable "filebeat_docker_image" {
   description = "Filebeat docker image form public docker registry"
   default= "microservicestoday/filebeat"
 }
-
-variable "additional_subnet_availability_zone" {
-  description = "The availability zone for additional subnet to be created"
-}

@@ -3,7 +3,7 @@ resource "aws_alb" "master" {
   name            = "${var.pre_tag}-Master-ALB-${var.post_tag}"
   internal        = false
   security_groups = ["${var.public_security_group_id}"]
-  subnets         = ["${var.public_subnet_id}","${aws_subnet.additional_subnet.id}"]
+  subnets         = ["${var.public_subnet_id}","${aws_subnet.private-secondary.id}"]
 
 
   tags {
@@ -15,7 +15,7 @@ resource "aws_alb" "master" {
 }
 
 resource "aws_alb_target_group" "dcos-masters" {
-  name     = "${var.pre_tag}-Master-target-group"
+  name     = "${var.pre_tag}-Master-Target-Group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"

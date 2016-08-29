@@ -28,9 +28,11 @@ resource "aws_autoscaling_group" "dcos_public_agent_asg" {
   health_check_grace_period = "${var.public_agent_asg_health_check_grace_period}"
 
   launch_configuration = "${aws_launch_configuration.dcos_public_agent_lc.name}"
+  availability_zones = [
+    "${data.aws_availability_zones.available.names[0]}"
+  ]
 
-  availability_zones = ["${var.aws_region}a"]
-  vpc_zone_identifier = ["${aws_subnet.availability-zone-private.id}"]
+  vpc_zone_identifier = ["${aws_subnet.private-primary.id}"]
 
   target_group_arns = ["${aws_alb_target_group.dcos-public-agents.arn}"]
 

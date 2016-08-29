@@ -5,10 +5,10 @@ output "agent_count" {
   value = "${var.public_agent_asg_desired_capacity + var.agent_asg_desired_capacity}"
 }
 output "private_subnet_id" {
-  value = "${aws_subnet.availability-zone-private.id}"
+  value = "${aws_subnet.private-primary.id}"
 }
 output "private_subnet_availability_zone" {
-  value = "${aws_subnet.availability-zone-private.availability_zone}"
+  value = "${aws_subnet.private-primary.availability_zone}"
 }
 output "public_agent_ids" {
   value = "${trimspace(null_resource.intermediates.triggers.public_agent_ids)}"

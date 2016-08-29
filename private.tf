@@ -1,3 +1,7 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_security_group" "private" {
   name = "${var.pre_tag}-Security-Private-${var.post_tag}"
   description = "Allow incoming connections."
@@ -34,24 +38,24 @@ resource "aws_security_group" "private" {
   }
 }
 
-resource "aws_subnet" "availability-zone-private" {
+resource "aws_subnet" "private-primary" {
   vpc_id = "${var.vpc_id}"
   cidr_block = "${var.private_subnet_cidr}"
-  availability_zone = "${var.aws_region}a"
+  availability_zone = "${data.aws_availability_zones.available.names[0]}"
   tags {
-    Name = "${var.pre_tag}-Private-Subnet-${var.post_tag}"
+    Name = "${var.pre_tag}-Private-Primary-${var.post_tag}"
     Service = "${var.tag_service}"
     Environment = "${var.tag_environment}"
     Version = "${var.tag_version}"
   }
 }
 
-resource "aws_subnet" "additional_subnet" {
+resource "aws_subnet" "private-secondary" {
   vpc_id = "${var.vpc_id}"
   cidr_block = "10.0.3.0/24"
-  availability_zone = "${var.additional_subnet_availability_zone}"
+  availability_zone = "${data.aws_availability_zones.available.names[1]}"
   tags {
-    Name = "${var.pre_tag}-addiitional-Subnet-${var.post_tag}"
+    Name = "${var.pre_tag}-Private-Secondary-${var.post_tag}"
     Service = "${var.tag_service}"
     Environment = "${var.tag_environment}"
     Version = "${var.tag_version}"
@@ -84,6 +88,6 @@ resource "aws_route_table" "availability-zone-private" {
 }
 
 resource "aws_route_table_association" "availability-zone-private" {
-  subnet_id = "${aws_subnet.availability-zone-private.id}"
+  subnet_id = "${aws_subnet.private-primary.id}"
   route_table_id = "${aws_route_table.availability-zone-private.id}"
 }
