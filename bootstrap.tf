@@ -62,7 +62,7 @@ resource "null_resource" "dcos-installation" {
 
   provisioner "remote-exec" {
     inline = [
-      "curl -O ${var.dcos_installer_url}",
+      "curl ${var.dcos_installer_url["${var.dcos_edition}"]} > dcos_generate_config.sh",
       "rm -r $HOME/genconf; mkdir $HOME/genconf"
     ]
   }
@@ -90,10 +90,10 @@ resource "null_resource" "dcos-installation" {
       "curl -fsSL https://get.docker.com/ | sh",
       "sudo service docker start",
       "sudo systemctl enable docker",
-      "sudo bash dcos_generate_config.ee.sh --hash-password ${var.dcos_password} > secret_hash",
+      "sudo bash dcos_generate_config.sh --hash-password ${var.dcos_password} > secret_hash",
       "sed -i -n '$p' secret_hash",
       "echo 'superuser_password_hash:' $(cat $HOME/secret_hash) >> $HOME/genconf/config.yaml",
-      "sudo bash $HOME/dcos_generate_config.ee.sh",
+      "sudo bash $HOME/dcos_generate_config.sh",
       "sudo docker run --restart=always -d -p 9999:80 -v $HOME/genconf/serve:/usr/share/nginx/html:ro nginx 2>/dev/null"
     ]
   }

@@ -77,7 +77,10 @@ variable "nfs_access_address" {
 
 variable "dcos_installer_url" {
   description = "DCOS installer url"
-  default = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
+  default = {
+    "enterprise" = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
+    "community"  = "https://downloads.dcos.io/dcos/EarlyAccess/dcos_generate_config.sh"
+  }
 }
 
 variable "master_user_data" {
@@ -176,4 +179,9 @@ variable "s3_bucket_name" {
 variable "filebeat_docker_image" {
   description = "Filebeat docker image form public docker registry"
   default= "microservicestoday/filebeat"
+}
+
+variable "dcos_edition" {
+  description = "DCOS edition type, enterprise/community"
+  default = "enterprise"
 }

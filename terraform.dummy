@@ -7,16 +7,22 @@ post_tag = "Terra"
 tag_service = "DCOS 1.73"
 tag_environment = "Staging"
 tag_version = "1.02"
-aws_region     = "ap-northeast-1"             /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
+aws_region     = "ap-northeast-1"  /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
 aws_ssl_certificate_arn_id = ""
 s3_bucket_name = "dummy"  /* adhere to bucket naming conventions */
 key_pair_name = "dummy"
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
-dcos_installer_url = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
-dcos_username = "dummy"
-dcos_password = "dummy"
+dcos_edition  = "enterprise"    /* enterprise, community */
+dcos_username = "dummy"     /* skip for community edition */
+dcos_password = "dummy"     /* skip for community edition */
+/** Dev example
+ * dcos_master_count = "1"
+ * agent_asg_desired_capacity = "1"
+ * public_agent_asg_desired_capacity = "1"
+ * dcos_installer_url = { DCOS_EDITION = "--url--" }   // DCOS_EDITION can be enterprise or community
+ */
 
 /* Hosted Zone Configuration */
 hosted_zone_id = "DUMMY"

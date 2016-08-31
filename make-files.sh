@@ -19,6 +19,7 @@ resolvers:
 ssh_key_path: '/genconf/ssh_key'
 ssh_port: 22
 ssh_user: core
+oauth_enabled: 'false'
 superuser_username: $DCOS_USERNAME
 FIN
 
