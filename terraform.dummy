@@ -1,16 +1,16 @@
 /* AWS */
-vpc_id = "dummy"
-public_subnet_id = "dummy"
-public_security_group_id = "dummy"
-pre_tag = "Testing"
-post_tag = "Terra"
-tag_service = "DCOS 1.73"
-tag_environment = "Staging"
-tag_version = "1.02"
-aws_region     = "ap-northeast-1"  /* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
-aws_ssl_certificate_arn_id = ""
+vpc_id = "dummy"    /* ID of VPC created for hosting DC/OS */
+public_subnet_id = "dummy" /* ID of public subnet created within VPC */
+public_security_group_id = "dummy" /* ID of public security group */
+pre_tag = "Testing"			/* Pre-tag to be attached to AWS resources for identification */
+post_tag = "Terra"			/* Post-tag to be attached to AWS resources for identification */
+tag_service = "DCOS 1.73"		/* Specify the service */
+tag_environment = "Staging"		/* Specify the environment */
+tag_version = "1.02"			/* Specify the version */
+aws_region     = "ap-northeast-1"  	/* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
+aws_ssl_certificate_arn_id = ""    /* ARN of SSL certificate created by AWS Certificate Manager */	   
 s3_bucket_name = "dummy"  /* adhere to bucket naming conventions */
-key_pair_name = "dummy"
+key_pair_name = "dummy"   /* key_pair_name should be exactly as it is in your AWS */
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
@@ -25,7 +25,7 @@ dcos_password = "dummy"     /* skip for community edition */
  */
 
 /* Hosted Zone Configuration */
-hosted_zone_id = "DUMMY"
-domain_name = "dummy.com"
+domain_name = "dummy.com"  /* your domain name */
+hosted_zone_id = "DUMMY"  /* ID of the Hosted Zone for above domain within Route53 */
 master_dns_record_name = "Dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */
 tyk_dns_record_name = "Dummy" /* eg: dcos-app, then record name would be dcos-app.dummy.com */
