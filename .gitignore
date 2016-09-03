@@ -39,6 +39,9 @@ node_modules
 # Emacs
 *~
 
+# Mac
+.DS_Store
+
 # Webstorm
 .idea/
 
