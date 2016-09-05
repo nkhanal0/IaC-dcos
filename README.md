@@ -7,22 +7,26 @@ This terraform script will setup the DCOS cluster in AWS.
  - Internet gateway
 
 #### Pre-requisites
-- An IAM account with administrator privileges.
-- (skip if you use [IaC-manager][iac-manager]) An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
-  We need the following information prior to starting the script.
-  - public_security_group_id
-  - public_subnet_id
-  - vpc_id
-  - key_pair_name 
-  We have an [Iac-manager][iac-manager] which can do this task.
-- Install terraform in the machine from [here][terraform-install]. Terraform v0.7.0 or above is required.
+- With IaC-Manager or skip to manual steps
+  - Use [IaC-manager](https://github.com/microservices-today/IaC-manager) to create a manager node. Then SSH into the manager node and perform the steps for installation.  
+
+- Manual steps
+  - An IAM account with privileges mentioned [here](https://github.com/microservices-today/IaC-manager#iac-manager-node-jump-server).
+  - An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
+    We need the following information prior to starting the script.
+    - public_security_group_id
+    - public_subnet_id
+    - vpc_id
+    - key_pair_name 
+    We have an [Iac-manager][iac-manager] which can do this task.
+  - Install terraform in the machine from [here][terraform-install]. Terraform v0.7.0 or above is required.
 - Public Key Access with Agent support/ Agent Forwarding:
 
   ```bash
   ssh-add <key_pair_name>.pem
   ssh -A centos@<manager_public_ip>
   ```
-- A hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancer.
+- Hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancer.
   - If you do not want to create a dns name for load balancer, remove the `aws_route53_record` resource from `elb-master.tf`
 
 #### Steps to install DCOS
