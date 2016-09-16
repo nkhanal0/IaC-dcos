@@ -8,8 +8,7 @@ This terraform script will setup the DCOS cluster in AWS.
 
 #### Pre-requisites
 - With IaC-Manager or skip to manual steps
-  - Use [IaC-manager](https://github.com/microservices-today/IaC-manager) to create a manager node. Then SSH into the manager node and perform the steps for installation.  
-
+  - Use [IaC-manager](https://github.com/microservices-today/IaC-manager) to create a manager node. Then SSH into the manager node and perform the steps for installation. 
 - Manual steps
   - An IAM account with privileges mentioned [here](https://github.com/microservices-today/IaC-manager#iac-manager-node-jump-server).
   - An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
@@ -28,6 +27,8 @@ This terraform script will setup the DCOS cluster in AWS.
   ```
 - Hosted zone in AWS Route53 for your domain name. This is required to create a record for creating a friendly dns name for the load balancer.
   - If you do not want to create a dns name for load balancer, remove the `aws_route53_record` resource from `elb-master.tf`
+- "Accept Software Terms" of aws marketplace for [CentOS](https://aws.amazon.com/marketplace/search/results?searchTerms=centos&page=1&ref_=nav_search_box) or [CoreOS](https://aws.amazon.com/marketplace/search/results?searchTerms=coreos&page=1&ref_=nav_search_box).
+
 
 #### Steps to install DCOS
 - Export AWS credentials as bash variables
