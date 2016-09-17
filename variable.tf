@@ -34,19 +34,19 @@ variable "aws_region" {
 
 variable "coreos_amis" {
   description = "CoreOS AMIs by region used in master and agent nodes"
+  /* v1068.10.0, released 08/26/2016 */
   default = {
-    ap-northeast-1 = "ami-56498b37"
-    ap-southeast-1 = "ami-b9ed34da"
-    ap-south-1 = "ami-985025f7"
+    ap-northeast-1 = "ami-35498754"
+    ap-southeast-1 = "ami-4ae53d29"
   }
 }
 
 variable "centos_amis" {
   description = "CentOS AMIs by region user in bootstrap node"
+  /* v1602, released 02/26/2016 */
   default = {
     ap-southeast-1 = "ami-f068a193"
     ap-northeast-1 = "ami-eec1c380"
-    ap-south-1 = "ami-95cda6fa"
   }
 }
 
