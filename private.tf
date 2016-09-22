@@ -87,7 +87,12 @@ resource "aws_route_table" "availability-zone-private" {
   }
 }
 
-resource "aws_route_table_association" "availability-zone-private" {
+resource "aws_route_table_association" "availability-zone-private-primary" {
   subnet_id = "${aws_subnet.private-primary.id}"
+  route_table_id = "${aws_route_table.availability-zone-private.id}"
+}
+
+resource "aws_route_table_association" "availability-zone-private-secondary" {
+  subnet_id = "${aws_subnet.private-secondary.id}"
   route_table_id = "${aws_route_table.availability-zone-private.id}"
 }
