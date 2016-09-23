@@ -95,9 +95,9 @@ variable "instance_type" {
   description = "DCOS instance type"
   default = {
     "bootstrap" = "m4.large"
-    "master" = "m4.large"
-    "public-agent" = "m4.large"
-    "agent" = "m4.large"
+    "master" = "m4.2xlarge"
+    "public-agent" = "m4.2xlarge"
+    "agent" = "m4.2xlarge"
   }
 }
 
