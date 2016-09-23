@@ -53,6 +53,10 @@ variable "centos_amis" {
 variable "dcos_cluster_name" {
   description = "DC/OS cluster name"
 }
+variable "dcos_timezone" {
+  description = "DC/OS timezone"
+  default = "Asia/Tokyo"
+}
 variable "dcos_username" {
   description = "DC/OS Username"
 }
