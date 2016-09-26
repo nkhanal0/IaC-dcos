@@ -11,14 +11,15 @@ until $(curl --output /dev/null --silent --head --fail http://${master_alb_dns_n
   echo "Waiting for DC/OS to be live and running ..."
   sleep 10
 done
-curl -O https://downloads.mesosphere.com/dcos-cli/install.sh
+curl -O https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos
 sleep 20
 until $(curl --output /dev/null --silent --head --fail http://${master_alb_dns_name}); do
   echo "Waiting for DC/OS to be live and running ..."
   sleep 10
 done
-echo yes | bash ./install.sh . http://${master_alb_dns_name}
-source ./bin/env-setup
+chmod +x dcos
+echo 'PATH=$PATH:$HOME/dcos-cli' >> ~/.bashrc
+source ~/.bashrc
 dcos config set core.dcos_url http://${dcos_username}:${dcos_password}@${master_alb_dns_name}
 dcos config show
 dcos auth login

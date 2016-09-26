@@ -53,7 +53,7 @@ resource "aws_instance" "bootstrap" {
 
 
 resource "null_resource" "dcos-installation" {
-  depends_on = ["aws_route_table_association.availability-zone-private-primary", "aws_route_table_association.availability-zone-private-secondary", "aws_instance.master"]
+  depends_on = ["aws_route_table_association.availability-zone-private-primary", "aws_route_table_association.availability-zone-public-secondary", "aws_instance.master"]
   connection {
     host = "${aws_instance.bootstrap.private_ip}"
     user = "centos"

@@ -4,6 +4,8 @@ variable "vpc_id" {
 }
 variable "public_subnet_id" {
 }
+variable "public_route_table_id" {
+}
 variable "public_security_group_id" {
 }
 variable "pre_tag" {

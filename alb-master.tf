@@ -3,7 +3,7 @@ resource "aws_alb" "master" {
   name            = "${var.pre_tag}-Master-ALB-${var.post_tag}"
   internal        = false
   security_groups = ["${var.public_security_group_id}"]
-  subnets         = ["${var.public_subnet_id}","${aws_subnet.private-secondary.id}"]
+  subnets         = ["${var.public_subnet_id}","${aws_subnet.public-secondary.id}"]
 
 
   tags {
