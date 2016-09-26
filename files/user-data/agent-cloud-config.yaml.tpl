@@ -43,7 +43,6 @@ coreos:
         ExecStartPre=-/bin/sh -c "docker rm -f %p 2> /dev/null"
         ExecStartPre=/bin/sh -c "docker pull ${filebeat_image}"
         ExecStart=/bin/sh -c "docker run --rm --name %p --privileged -v /var/log/mesos:/var/log/mesos -e "LOGSTASH_URI=${logstash_uri}" ${filebeat_image}"
-        ExecStart=/usr/bin/timedatectl set-timezone ${dcos_timezone}
         ExecStop=/bin/sh -c "docker stop %p"
         RestartSec=5
         Restart=always
