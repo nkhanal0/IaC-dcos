@@ -7,7 +7,7 @@ resource "aws_instance" "master" {
   subnet_id = "${aws_subnet.private-primary.id}"
   source_dest_check = false
   count = "${var.dcos_master_count}"
-  user_data = "${element(template_file.master_user_data.*.rendered, count.index)}"
+  user_data = "${element(data.template_file.master_user_data.*.rendered, count.index)}"
   iam_instance_profile = "${aws_iam_instance_profile.s3_profile_master.name}"
 
   connection {
@@ -31,7 +31,7 @@ resource "aws_instance" "master" {
   }
 }
 
-resource "template_file" "master_user_data" {
+data "template_file" "master_user_data" {
   count = "${var.dcos_master_count}"
   template = "${file("${format(lookup(var.master_user_data, signum(count.index)), path.module)}")}"
 
@@ -42,10 +42,6 @@ resource "template_file" "master_user_data" {
     role = "master"
     logstash_uri = "${aws_elb.logstash.dns_name}:80"
     filebeat_image = "${var.filebeat_docker_image}"
-  }
-
-  lifecycle {
-    create_before_destroy = true
   }
 }
 
