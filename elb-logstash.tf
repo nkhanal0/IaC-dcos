@@ -17,4 +17,8 @@ resource "aws_elb" "logstash" {
     target = "TCP:22"
     interval = 30
   }
+
+  provisioner "local-exec" {
+    command = "echo 'elb_logstash_id=\"${self.id}\"' >> ../terraform.out"
+  }
 }
