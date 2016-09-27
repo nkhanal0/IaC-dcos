@@ -8,5 +8,6 @@ data "template_file" "public_agent_user_data" {
     role = "slave_public"
     logstash_uri = "${aws_elb.logstash.dns_name}:80"
     filebeat_image = "${var.filebeat_docker_image}"
+    dcos_timezone = "${var.dcos_timezone}"
   }
 }

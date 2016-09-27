@@ -28,7 +28,7 @@ dcos_password = "dummy"     /* skip for community edition */
  * agent_asg_desired_capacity = "1"
  * public_agent_asg_desired_capacity = "1"
  * dcos_installer_url = { DCOS_EDITION = "--url--" }   // DCOS_EDITION can be enterprise or community
- * dcos_timezone = "UTC"  // e.g. Asia/Tokyo or Asia/Singapore
+ * dcos_timezone = "Asia/Tokyo"  // e.g. UTC or Asia/Singapore
  */
 
 /* Hosted Zone Configuration */

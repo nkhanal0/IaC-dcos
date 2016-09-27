@@ -102,3 +102,12 @@ coreos:
         ExecStart=/bin/bash /tmp/dcos/dcos_install.sh ${role}
         [Install]
         WantedBy=multi-user.target
+    - name: settimezone.service
+      command: start
+      content: |
+        [Unit]
+        Description=Set the time zone
+        [Service]
+        ExecStart=/usr/bin/timedatectl set-timezone ${dcos_timezone}
+        RemainAfterExit=yes
+        Type=oneshot

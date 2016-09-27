@@ -42,6 +42,7 @@ data "template_file" "master_user_data" {
     role = "master"
     logstash_uri = "${aws_elb.logstash.dns_name}:80"
     filebeat_image = "${var.filebeat_docker_image}"
+    dcos_timezone = "${var.dcos_timezone}"
   }
 }
 

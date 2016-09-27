@@ -57,7 +57,7 @@ variable "dcos_cluster_name" {
 }
 variable "dcos_timezone" {
   description = "DC/OS timezone"
-  default = "UTC"
+  default = "Asia/Tokyo"
 }
 variable "dcos_username" {
   description = "DC/OS Username"

@@ -141,3 +141,12 @@ coreos:
         StandardOutput=journal+console
         StandardError=journal+console
         ExecStart=/bin/bash /etc/systemd/system/docker-cert-script.service.d/certificate-download-script.sh
+    - name: settimezone.service
+      command: start
+      content: |
+        [Unit]
+        Description=Set the time zone
+        [Service]
+        ExecStart=/usr/bin/timedatectl set-timezone ${dcos_timezone}
+        RemainAfterExit=yes
+        Type=oneshot
