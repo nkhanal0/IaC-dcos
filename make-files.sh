@@ -7,6 +7,7 @@ cluster_name: $CLUSTER_NAME
 exhibitor_storage_backend: static
 log_directory: /genconf/logs
 ip_detect_filename: /genconf/ip-detect
+master_discovery: static
 master_list:
 - $MASTER_00
 - $MASTER_01
