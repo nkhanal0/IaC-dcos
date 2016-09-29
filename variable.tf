@@ -23,11 +23,11 @@ variable "tag_version" {
 }
 variable "dcos_master_disk_size" {
   description = "The size of Master node root block device disk in GB"
-  default = "30"
+  default = "256"
 }
 variable "dcos_agent_disk_size" {
   description = "The size of Agent node root block device disk in GB"
-  default = "30"
+  default = "256"
 }
 
 variable "aws_region" {
