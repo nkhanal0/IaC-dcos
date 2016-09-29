@@ -66,6 +66,7 @@ data "template_file" "dcos-cli-installation-script" {
     master_alb_dns_name = "${aws_alb.master.dns_name}"
     dcos_username = "${var.dcos_username}"
     dcos_password = "${var.dcos_password}"
+    dcos_cli_download_url = "${var.dcos_cli_download_url}"
   }
 }
 

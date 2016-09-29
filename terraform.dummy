@@ -29,6 +29,7 @@ dcos_password = "dummy"     /* skip for community edition */
  * public_agent_asg_desired_capacity = "1"
  * dcos_installer_url = { DCOS_EDITION = "--url--" }   // DCOS_EDITION can be enterprise or community
  * dcos_timezone = "Asia/Tokyo"  // e.g. UTC or Asia/Singapore
+ * dcos_cli_download_url = "http://d3evwvza4ryf1d.cloudfront.net/dcos/dcos-cli/dcos"
  */
 
 /* Hosted Zone Configuration */
