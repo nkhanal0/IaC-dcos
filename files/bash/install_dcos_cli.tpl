@@ -11,7 +11,7 @@ until $(curl --output /dev/null --silent --head --fail http://${master_alb_dns_n
   echo "Waiting for DC/OS to be live and running ..."
   sleep 10
 done
-curl -O https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos
+curl -O ${dcos_cli_download_url}
 sleep 20
 until $(curl --output /dev/null --silent --head --fail http://${master_alb_dns_name}); do
   echo "Waiting for DC/OS to be live and running ..."

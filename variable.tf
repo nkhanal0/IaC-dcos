@@ -191,3 +191,8 @@ variable "dcos_edition" {
   description = "DCOS edition type, enterprise/community"
   default = "enterprise"
 }
+
+variable "dcos_cli_download_url" {
+  description = "DCOS CLI installation URL"
+  default = "https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos"
+}
