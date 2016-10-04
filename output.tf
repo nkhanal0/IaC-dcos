@@ -4,7 +4,7 @@ output "agent_ips" {
 output "agent_count" {
   value = "${var.public_agent_asg_desired_capacity + var.agent_asg_desired_capacity}"
 }
-output "private_subnet_id" {
+output "private_primary_subnet_id" {
   value = "${aws_subnet.private-primary.id}"
 }
 output "private_subnet_availability_zone" {
