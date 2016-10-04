@@ -40,7 +40,7 @@ resource "aws_security_group" "private" {
 
 resource "aws_subnet" "private-primary" {
   vpc_id = "${var.vpc_id}"
-  cidr_block = "${var.private_subnet_cidr}"
+  cidr_block = "${var.private_primary_subnet_cidr}"
   availability_zone = "${data.aws_availability_zones.available.names[0]}"
   tags {
     Name = "${var.pre_tag}-Private-Primary-${var.post_tag}"
@@ -48,6 +48,28 @@ resource "aws_subnet" "private-primary" {
     Environment = "${var.tag_environment}"
     Version = "${var.tag_version}"
   }
+}
+
+resource "aws_route_table_association" "availability-zone-private-primary" {
+  subnet_id = "${aws_subnet.private-primary.id}"
+  route_table_id = "${aws_route_table.availability-zone-private.id}"
+}
+
+resource "aws_subnet" "private-secondary" {
+  vpc_id = "${var.vpc_id}"
+  cidr_block = "${var.private_secondary_subnet_cidr}"
+  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  tags {
+    Name = "${var.pre_tag}-Private-Secondary-${var.post_tag}"
+    Service = "${var.tag_service}"
+    Environment = "${var.tag_environment}"
+    Version = "${var.tag_version}"
+  }
+}
+
+resource "aws_route_table_association" "availability-zone-private-secondary" {
+  subnet_id = "${aws_subnet.private-secondary.id}"
+  route_table_id = "${aws_route_table.availability-zone-private.id}"
 }
 
 resource "aws_eip" "nat" {
@@ -79,7 +101,4 @@ resource "aws_route_table" "availability-zone-private" {
   }
 }
 
-resource "aws_route_table_association" "availability-zone-private-primary" {
-  subnet_id = "${aws_subnet.private-primary.id}"
-  route_table_id = "${aws_route_table.availability-zone-private.id}"
-}
+

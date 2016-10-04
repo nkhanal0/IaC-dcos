@@ -14,7 +14,7 @@ output "public_agent_ids" {
   value = "${trimspace(null_resource.intermediates.triggers.public_agent_ids)}"
 }
 output "dcos_url" {
-  value = "http://${aws_alb.master.dns_name}"
+  value = "http://${aws_alb.master-internal.dns_name}"
 }
 output "dcos_acs_token" {
   value = "${trimspace(null_resource.intermediates.triggers.dcos_acs_token)}"
@@ -63,7 +63,7 @@ resource "null_resource" "retrieve-autoscaling-group-instances" {
 data "template_file" "dcos-cli-installation-script" {
   template = "${file("${path.module}/files/bash/install_dcos_cli.tpl")}"
   vars {
-    master_alb_dns_name = "${aws_alb.master.dns_name}"
+    master_alb_dns_name = "${aws_alb.master-internal.dns_name}"
     dcos_username = "${var.dcos_username}"
     dcos_password = "${var.dcos_password}"
     dcos_cli_download_url = "${var.dcos_cli_download_url}"

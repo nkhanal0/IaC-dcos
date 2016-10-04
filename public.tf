@@ -1,6 +1,6 @@
 resource "aws_subnet" "public-secondary" {
   vpc_id = "${var.vpc_id}"
-  cidr_block = "10.0.3.0/24"
+  cidr_block = "${var.public_secondary_subnet_cidr}"
   availability_zone = "${data.aws_availability_zones.available.names[1]}"
   tags {
     Name = "${var.pre_tag}-Public-Secondary-${var.post_tag}"
