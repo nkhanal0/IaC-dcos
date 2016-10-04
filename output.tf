@@ -7,6 +7,9 @@ output "agent_count" {
 output "private_primary_subnet_id" {
   value = "${aws_subnet.private-primary.id}"
 }
+output "private_secondary_subnet_id" {
+  value = "${aws_subnet.private-secondary.id}"
+}
 output "private_subnet_availability_zone" {
   value = "${aws_subnet.private-primary.availability_zone}"
 }
