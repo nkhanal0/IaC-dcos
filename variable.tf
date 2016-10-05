@@ -188,6 +188,11 @@ variable "tyk_dns_record_name" {
   description = "Name of the record that you want to create for load balancer"
 }
 
+variable "jenkins_dns_record_name" {
+  description = "Name of the record that you want to create for load balancer"
+  default = "jenkins"
+}
+
 variable "s3_bucket_name" {
   description = "AWS S3 Bucket name"
 }
