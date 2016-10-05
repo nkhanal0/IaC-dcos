@@ -2,8 +2,8 @@
 resource "aws_alb" "tyk" {
   name            = "${var.pre_tag}-Tyk-ALB"
   internal        = false
-  security_groups = ["${var.public_security_group_id}"]
-  subnets         = ["${var.public_subnet_id}","${aws_subnet.public-secondary.id}"]
+  security_groups = ["${aws_security_group.public.id}"]
+  subnets         = ["${aws_subnet.public-primary.id}","${aws_subnet.public-secondary.id}"]
 
 
   tags {

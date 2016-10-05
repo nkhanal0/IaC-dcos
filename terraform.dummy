@@ -10,10 +10,7 @@ tag_environment = "Staging"		/* Specify the environment */
 tag_version = "1.02"			/* Specify the version */
 aws_region     = "ap-northeast-1"  	/* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
 vpc_id = "dummy"    /* ID of VPC created for hosting DC/OS */
-public_subnet_id = "dummy" /* ID of public subnet created within VPC */
-public_security_group_id = "dummy" /* ID of public security group */
 key_pair_name = "dummy"   /* key_pair_name should be exactly as it is in your AWS */
-public_route_table_id = "dummy"
 
 aws_ssl_certificate_arn_id = ""    /* ARN of SSL certificate created by AWS Certificate Manager */	   
 s3_bucket_name = "dummy"  /* adhere to bucket naming conventions */

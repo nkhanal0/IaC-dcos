@@ -1,7 +1,7 @@
 resource "aws_elb" "logstash" {
   name = "${var.pre_tag}-Logstash-ELB-${var.post_tag}"
-  subnets = ["${var.public_subnet_id}"]
-  security_groups = ["${var.public_security_group_id}"]
+  subnets = ["${aws_subnet.public-primary.id}"]
+  security_groups = ["${aws_security_group.public.id}"]
 
   "listener" {
     instance_port = 5044

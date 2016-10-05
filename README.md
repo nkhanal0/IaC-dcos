@@ -13,8 +13,6 @@ This terraform script will setup the DCOS cluster in AWS.
   - An IAM account with privileges mentioned [here](https://github.com/microservices-today/IaC-manager#iac-manager-node-jump-server).
   - An existing infrastructure with a VPC, Subnet and instance from where this terraform can be run.
     We need the following information prior to starting the script.
-    - public_security_group_id
-    - public_subnet_id
     - vpc_id
     - key_pair_name 
     We have an [Iac-manager][iac-manager] which can do this task.
