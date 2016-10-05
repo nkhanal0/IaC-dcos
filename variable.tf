@@ -2,12 +2,6 @@ variable "key_pair_name" {
 }
 variable "vpc_id" {
 }
-variable "public_subnet_id" {
-}
-variable "public_route_table_id" {
-}
-variable "public_security_group_id" {
-}
 variable "pre_tag" {
 }
 variable "post_tag" {
@@ -71,7 +65,7 @@ variable "dcos_master_count" {
   default = "3"
 }
 
-variable "private_primary_subnet_cidr" {
+variable "public_primary_subnet_cidr" {
   description = "CIDR for the Private Subnet"
   default = "10.0.1.0/24"
 }
@@ -81,9 +75,18 @@ variable "public_secondary_subnet_cidr" {
   default = "10.0.2.0/24"
 }
 
-variable "private_secondary_subnet_cidr" {
+variable "private_primary_subnet_cidr" {
   description = "CIDR for the Private Subnet"
   default = "10.0.3.0/24"
+}
+
+variable "private_secondary_subnet_cidr" {
+  description = "CIDR for the Private Subnet"
+  default = "10.0.4.0/24"
+}
+
+variable "internet_gateway_id" {
+  description = "Internet Gateway ID"
 }
 
 variable "nfs_access_address" {

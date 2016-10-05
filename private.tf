@@ -52,7 +52,7 @@ resource "aws_subnet" "private-primary" {
 
 resource "aws_route_table_association" "availability-zone-private-primary" {
   subnet_id = "${aws_subnet.private-primary.id}"
-  route_table_id = "${aws_route_table.availability-zone-private.id}"
+  route_table_id = "${aws_route_table.private.id}"
 }
 
 resource "aws_subnet" "private-secondary" {
@@ -69,7 +69,7 @@ resource "aws_subnet" "private-secondary" {
 
 resource "aws_route_table_association" "availability-zone-private-secondary" {
   subnet_id = "${aws_subnet.private-secondary.id}"
-  route_table_id = "${aws_route_table.availability-zone-private.id}"
+  route_table_id = "${aws_route_table.private.id}"
 }
 
 resource "aws_eip" "nat" {
@@ -78,14 +78,14 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = "${aws_eip.nat.id}"
-  subnet_id = "${var.public_subnet_id}"
+  subnet_id = "${aws_subnet.public-primary.id}"
 
   provisioner "local-exec" {
     command = "echo 'nat_gateway_public_ip=\"${self.public_ip}\"' >> ../terraform.out"
   }
 }
 
-resource "aws_route_table" "availability-zone-private" {
+resource "aws_route_table" "private" {
   vpc_id = "${var.vpc_id}"
 
   route {
