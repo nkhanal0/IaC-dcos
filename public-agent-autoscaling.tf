@@ -34,7 +34,7 @@ resource "aws_autoscaling_group" "dcos_public_agent_asg" {
 
   vpc_zone_identifier = ["${aws_subnet.private-primary.id}"]
 
-  target_group_arns = ["${aws_alb_target_group.dcos-public-agents.arn}"]
+  target_group_arns = ["${aws_alb_target_group.dcos-public-agents.arn}","${aws_alb_target_group.jenkins-agents.arn}"]
 
   force_delete = true
 
