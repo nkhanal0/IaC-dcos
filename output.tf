@@ -34,6 +34,9 @@ output "nat_gateway_public_ip" {
 output "elb_logstash_id" {
   value = "${aws_elb.logstash.id}"
 }
+output "jenkins_url" {
+  value = "https://${var.jenkins_dns_record_name}.${var.domain_name}"
+}
 
 data "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("${path.module}/files/bash/autoscaling_group_instances.bash.tpl")}"
