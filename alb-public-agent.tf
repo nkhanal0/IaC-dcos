@@ -15,7 +15,7 @@ resource "aws_alb" "tyk" {
 }
 
 resource "aws_alb_target_group" "dcos-public-agents" {
-  name     = "${var.pre_tag}-Tyk-target-group"
+  name     = "${var.pre_tag}-Tyk"
   port     = 10081
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"

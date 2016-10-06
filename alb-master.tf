@@ -15,7 +15,7 @@ resource "aws_alb" "master" {
 }
 
 resource "aws_alb_target_group" "dcos-masters" {
-  name     = "${var.pre_tag}-Master-Target-Group"
+  name     = "${var.pre_tag}-Master"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "${var.vpc_id}"
