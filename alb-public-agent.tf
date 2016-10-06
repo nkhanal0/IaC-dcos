@@ -7,7 +7,7 @@ resource "aws_alb" "tyk" {
 
 
   tags {
-    Name = "${var.pre_tag}-Master-${var.post_tag}"
+    Name = "${var.pre_tag}-Tyk-ALB"
     Service = "${var.tag_service}"
     Environment = "${var.tag_environment}"
     Version = "${var.tag_version}"
