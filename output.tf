@@ -17,7 +17,7 @@ output "public_agent_ids" {
   value = "${trimspace(null_resource.intermediates.triggers.public_agent_ids)}"
 }
 output "dcos_url" {
-  value = "https://${var.master_dns_record_name}.${var.domain_name}"
+  value = "http://${aws_alb.master-internal.dns_name}"
 }
 output "dcos_acs_token" {
   value = "${trimspace(null_resource.intermediates.triggers.dcos_acs_token)}"
@@ -33,9 +33,6 @@ output "nat_gateway_public_ip" {
 }
 output "elb_logstash_id" {
   value = "${aws_elb.logstash.id}"
-}
-output "jenkins_url" {
-  value = "https://${var.jenkins_dns_record_name}.${var.domain_name}"
 }
 
 data "template_file" "autoscaling_group_public_agent_instances_bash" {
