@@ -2,7 +2,7 @@
 resource "aws_alb" "jenkins" {
   name            = "${var.pre_tag}-Jenkins-ALB"
   internal        = true
-  security_groups = ["${var.public_security_group_id}"]
+  security_groups = ["${aws_security_group.public.id}"]
   subnets         = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
 
 
