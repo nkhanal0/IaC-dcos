@@ -98,7 +98,7 @@ variable "dcos_installer_url" {
   description = "DCOS installer url"
   default = {
     "enterprise" = "https://downloads.mesosphere.com/dcos/stable/dcos_generate_config.ee.sh"
-    "community"  = "https://downloads.dcos.io/dcos/EarlyAccess/dcos_generate_config.sh"
+    "community"  = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
   }
 }
 
