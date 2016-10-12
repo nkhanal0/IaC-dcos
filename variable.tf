@@ -214,3 +214,7 @@ variable "dcos_cli_download_url" {
   description = "DCOS CLI installation URL"
   default = "https://downloads.dcos.io/binaries/cli/linux/x86-64/dcos-1.8/dcos"
 }
+
+variable "sysdig_access_key" {
+  description = "Sysdig access key"
+}
