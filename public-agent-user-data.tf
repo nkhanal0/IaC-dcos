@@ -9,5 +9,6 @@ data "template_file" "public_agent_user_data" {
     logstash_uri = "${aws_elb.logstash.dns_name}:80"
     filebeat_image = "${var.filebeat_docker_image}"
     dcos_timezone = "${var.dcos_timezone}"
+    sysdig_access_key = "${var.sysdig_access_key}"
   }
 }

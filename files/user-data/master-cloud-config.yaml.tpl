@@ -45,6 +45,23 @@ coreos:
         Restart=always
         [X-Fleet]
         Global=true
+    - name: |-
+        sysdig-agent.service
+      command: |-
+        start
+      content: |
+        [Unit]
+        Description=Sysdig Cloud Agent
+        After=docker.service
+        Requires=docker.service
+
+        [Service]
+        TimeoutStartSec=0
+        ExecStartPre=-/usr/bin/docker kill sysdig-agent
+        ExecStartPre=-/usr/bin/docker rm sysdig-agent
+        ExecStartPre=/usr/bin/docker pull sysdig/agent
+        ExecStart=/usr/bin/docker run --name sysdig-agent --privileged --net host --pid host -e ACCESS_KEY=${sysdig_access_key} -e TAGS=NodeType:Master -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro sysdig/agent
+        ExecStop=/usr/bin/docker stop sysdig-agent
     - name: dcos-config-script.service
       drop-ins:
         - name: config-download-script.sh
