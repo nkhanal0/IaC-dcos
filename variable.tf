@@ -1,3 +1,6 @@
+variable "aws_region" {
+  description = "EC2 Region for the VPC"
+}
 variable "key_pair_name" {
 }
 variable "vpc_id" {
@@ -24,25 +27,22 @@ variable "dcos_agent_disk_size" {
   default = "256"
 }
 
-variable "aws_region" {
-  description = "EC2 Region for the VPC"
-}
-
 variable "coreos_amis" {
   description = "CoreOS AMIs by region used in master and agent nodes"
   /* v1068.10.0, released 08/26/2016 */
   default = {
     ap-northeast-1 = "ami-35498754"
     ap-southeast-1 = "ami-4ae53d29"
+    ap-south-1 = "ami-985025f7"
   }
 }
-
 variable "centos_amis" {
   description = "CentOS AMIs by region user in bootstrap node"
   /* v1602, released 02/26/2016 */
   default = {
     ap-southeast-1 = "ami-f068a193"
     ap-northeast-1 = "ami-eec1c380"
+    ap-south-1 = "ami-95cda6fa"
   }
 }
 
@@ -51,13 +51,14 @@ variable "dcos_cluster_name" {
 }
 variable "dcos_timezone" {
   description = "DC/OS timezone"
-  default = "Asia/Tokyo"
 }
 variable "dcos_username" {
-  description = "DC/OS Username"
+  description = "DC/OS Username for Enterprise edition"
+  default = "dummy"
 }
 variable "dcos_password" {
-  description = "DC/OS password"
+  description = "DC/OS password for Enterprise edition"
+  default = "dummy"
 }
 
 variable "dcos_master_count" {
@@ -122,7 +123,6 @@ variable "instance_type" {
 
 variable "aws_ssl_certificate_arn_id" {
   description = "ARN ID of the ssl certificate created in Amazon"
-  default = ""
 }
 
 
@@ -193,11 +193,6 @@ variable "tyk_dns_record_name" {
 
 variable "jenkins_dns_record_name" {
   description = "Name of the record that you want to create for load balancer"
-  default = "jenkins"
-}
-
-variable "s3_bucket_name" {
-  description = "AWS S3 Bucket name"
 }
 
 variable "filebeat_docker_image" {
@@ -207,7 +202,7 @@ variable "filebeat_docker_image" {
 
 variable "dcos_edition" {
   description = "DCOS edition type, enterprise/community"
-  default = "enterprise"
+  default = "community"
 }
 
 variable "dcos_cli_download_url" {
