@@ -37,6 +37,9 @@ output "elb_logstash_id" {
 output "jenkins_url" {
   value = "https://${var.jenkins_dns_record_name}.${var.domain_name}"
 }
+output "s3_bucket_name" {
+  value = "${aws_s3_bucket.cluster-storage.bucket}"
+}
 
 data "template_file" "autoscaling_group_public_agent_instances_bash" {
   template = "${file("${path.module}/files/bash/autoscaling_group_instances.bash.tpl")}"
