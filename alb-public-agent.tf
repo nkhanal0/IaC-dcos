@@ -1,6 +1,6 @@
 # Create a new load balancer
 resource "aws_alb" "tyk" {
-  name            = "${var.pre_tag}-Tyk-ALB"
+  name            = "${null_resource.alias.triggers.lb_pre_tag}-Tyk-${null_resource.alias.triggers.lb_post_tag}"
   internal        = false
   security_groups = ["${aws_security_group.public.id}"]
   subnets         = ["${aws_subnet.public-primary.id}","${aws_subnet.public-secondary.id}"]
