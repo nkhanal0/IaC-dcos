@@ -50,9 +50,9 @@ export AWS_DEFAULT_REGION="ap-northeast-1"
 - The AWS key name, AWS key path, VPC, Subnet, Security Group will be updated to `terraform.dummy` if the installation is done by [IaC-Manager][iac-manager].
 - If unable to perform `terraform destroy`, instance profile can be removed using aws cli only.
   `aws iam list-instance-profiles | grep InstanceProfileName`
-  `delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_master_${var.post_tag}`
-  `delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_agents_${var.post_tag}`
-  `delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_public_agent_${var.post_tag}`
+  `aws iam delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_master_${var.post_tag}`
+  `aws iam delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_agents_${var.post_tag}`
+  `aws iam delete-instance-profile --instance-profile-name ${var.pre_tag}_s3_profile_public_agent_${var.post_tag}`
 
 [iac-manager]: <https://github.com/microservices-today/IaC-manager>
 [terraform-install]: <https://www.terraform.io/intro/getting-started/install.html>
