@@ -1,6 +1,6 @@
 # Create a new load balancer for Jenkins
 resource "aws_alb" "jenkins" {
-  name            = "${var.pre_tag}-Jenkins-ALB"
+  name            = "${null_resource.alias.triggers.lb_pre_tag}-Jenkins-${null_resource.alias.triggers.lb_post_tag}"
   internal        = true
   security_groups = ["${aws_security_group.public.id}"]
   subnets         = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
