@@ -1,27 +1,36 @@
 variable "aws_region" {
   description = "EC2 Region for the VPC"
 }
+
 variable "key_pair_name" {
 }
+
 variable "vpc_id" {
 }
+
 variable "pre_tag" {
 }
+
 variable "post_tag" {
 }
+
 variable "tag_service" {
   description = "Service tag"
 }
+
 variable "tag_environment" {
   description = "Environment tag"
 }
+
 variable "tag_version" {
   description = "Version tag"
 }
+
 variable "dcos_master_disk_size" {
   description = "The size of Master node root block device disk in GB"
   default = "256"
 }
+
 variable "dcos_agent_disk_size" {
   description = "The size of Agent node root block device disk in GB"
   default = "256"
@@ -36,6 +45,7 @@ variable "coreos_amis" {
     ap-south-1 = "ami-985025f7"
   }
 }
+
 variable "centos_amis" {
   description = "CentOS AMIs by region user in bootstrap node"
   /* v1602, released 02/26/2016 */
@@ -49,13 +59,16 @@ variable "centos_amis" {
 variable "dcos_cluster_name" {
   description = "DC/OS cluster name"
 }
+
 variable "dcos_timezone" {
   description = "DC/OS timezone"
 }
+
 variable "dcos_username" {
   description = "DC/OS Username for Enterprise edition"
   default = "dummy"
 }
+
 variable "dcos_password" {
   description = "DC/OS password for Enterprise edition"
   default = "dummy"

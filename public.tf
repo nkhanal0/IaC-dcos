@@ -9,6 +9,7 @@ resource "aws_subnet" "public-primary" {
     Version = "${var.tag_version}"
   }
 }
+
 resource "aws_route_table_association" "availability-zone-public-primary" {
   subnet_id = "${aws_subnet.public-primary.id}"
   route_table_id = "${aws_route_table.public.id}"

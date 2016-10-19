@@ -5,7 +5,6 @@ resource "aws_alb" "tyk" {
   security_groups = ["${aws_security_group.public.id}"]
   subnets         = ["${aws_subnet.public-primary.id}","${aws_subnet.public-secondary.id}"]
 
-
   tags {
     Name = "${var.pre_tag}-Tyk-ALB"
     Service = "${var.tag_service}"
@@ -40,6 +39,7 @@ resource "aws_alb_listener" "front_end_tyk" {
     type = "forward"
   }
 }
+
 resource "aws_route53_record" "tyk_record" {
   zone_id = "${var.hosted_zone_id}"
   name = "${var.tyk_dns_record_name}.${var.domain_name}"

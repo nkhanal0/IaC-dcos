@@ -5,7 +5,6 @@ resource "aws_alb" "master" {
   security_groups = ["${aws_security_group.public.id}"]
   subnets         = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
 
-
   tags {
     Name = "${var.pre_tag}-Master-${var.post_tag}"
     Service = "${var.tag_service}"
@@ -40,7 +39,6 @@ resource "aws_alb_listener" "front_end" {
     type = "forward"
   }
 }
-
 
 resource "aws_alb_listener" "front_end_http" {
   load_balancer_arn = "${aws_alb.master.arn}"
