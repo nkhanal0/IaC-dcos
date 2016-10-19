@@ -3,38 +3,34 @@
  * as it will be copied form `terraform.out` while running
  * `cat ~/terraform.out >> ~/IaC-dcos/terraform.tfvars` command
  */
-pre_tag = "Testing"			/* Pre-tag to be attached to AWS resources for identification */
-post_tag = "Terra"			/* Post-tag to be attached to AWS resources for identification */
-tag_service = "DCOS 1.73"		/* Specify the service */
-tag_environment = "Staging"		/* Specify the environment */
-tag_version = "1.02"			/* Specify the version */
-aws_region     = "ap-northeast-1"  	/* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
-vpc_id = "dummy"    /* ID of VPC created for hosting DC/OS */
-key_pair_name = "dummy"   /* key_pair_name should be exactly as it is in your AWS */
-
+pre_tag = "Testing"			        /* Pre-tag to be attached to AWS resources for identification */
+post_tag = "Terra"			        /* Post-tag to be attached to AWS resources for identification */
+tag_service = "DCOS 1.73"		    /* Specify the service */
+tag_environment = "Staging"		    /* Specify the environment */
+tag_version = "1.02"			    /* Specify the version */
+aws_region  = "ap-northeast-1"  	/* ap-northeast-1 for Tokyo, ap-southeast-1 for SG */
+vpc_id = "dummy"                    /* ID of VPC created for hosting DC/OS */
+key_pair_name = "dummy"             /* key_pair_name should be exactly as it is in your AWS */
 
 /* Route 53 Configuration */
-hosted_zone_id = "DUMMY"  /* ID of the Hosted Zone for above domain within Route53 */
-domain_name = "dummy.com"  /* your domain name */
-master_dns_record_name = "dummy" /* eg: dcos-test, then record name would be dcos-test.dummy.com */
-tyk_dns_record_name = "dummy" /* eg: dcos-app, then record name would be dcos-app.dummy.com */
-jenkins_dns_record_name = "dummy" /* eg: dcos-jenkins, then record name would be dcos-jenkins.dummy.com */
+hosted_zone_id = "DUMMY"            /* ID of the Hosted Zone for above domain within Route53 */
+domain_name = "dummy.com"           /* your domain name */
+master_dns_record_name = "dummy"    /* eg: dcos-test, then record name would be dcos-test.dummy.com */
+tyk_dns_record_name = "dummy"       /* eg: dcos-app, then record name would be dcos-app.dummy.com */
+jenkins_dns_record_name = "dummy"   /* eg: dcos-jenkins, then record name would be dcos-jenkins.dummy.com */
 
-aws_ssl_certificate_arn_id = ""    /* ARN of SSL certificate created by AWS Certificate Manager */
-
-
+aws_ssl_certificate_arn_id = ""     /* ARN of SSL certificate created by AWS Certificate Manager */
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
 dcos_master_count = "3"
 agent_asg_desired_capacity = "3"
 public_agent_asg_desired_capacity = "3"
-dcos_timezone = "Asia/Tokyo"                          // e.g. UTC or Asia/Singapore
+dcos_timezone = "Asia/Tokyo"        /* e.g. UTC or Asia/Singapore */
 dcos_cli_download_url = "http://d3evwvza4ryf1d.cloudfront.net/dcos/dcos-cli/dcos"
 dcos_installer_url = {
     community = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"
 }
 
-
-sysdig_access_key = "dummy"                          // Sysdig cloud Access key (https://sysdig.com)
+sysdig_access_key = "dummy"         /* Sysdig cloud Access key (https://sysdig.com) */
 
