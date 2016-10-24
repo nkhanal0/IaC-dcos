@@ -1,4 +1,4 @@
-# Create a new load balancer
+/* Create a new load balancer */
 resource "aws_alb" "tyk" {
   name            = "${null_resource.alias.triggers.lb_pre_tag}-Tyk-${null_resource.alias.triggers.lb_post_tag}"
   internal        = false

@@ -1,4 +1,4 @@
-# Create a new load balancer for Jenkins
+/* Create a new load balancer for Jenkins */
 resource "aws_alb" "jenkins" {
   name            = "${null_resource.alias.triggers.lb_pre_tag}-Jenkins-${null_resource.alias.triggers.lb_post_tag}"
   internal        = true
