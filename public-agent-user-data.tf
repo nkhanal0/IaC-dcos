@@ -10,5 +10,6 @@ data "template_file" "public_agent_user_data" {
     filebeat_image = "${var.filebeat_docker_image}"
     dcos_timezone = "${var.dcos_timezone}"
     sysdig_access_key = "${var.sysdig_access_key}"
+    dcos_name = "${var.pre_tag}-${var.post_tag}"
   }
 }

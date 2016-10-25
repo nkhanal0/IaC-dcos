@@ -42,7 +42,7 @@ coreos:
         ExecStartPre=-/bin/sh -c "docker kill %p"
         ExecStartPre=-/bin/sh -c "docker rm -f %p 2> /dev/null"
         ExecStartPre=/bin/sh -c "docker pull ${filebeat_image}"
-        ExecStart=/bin/sh -c "docker run --rm --name %p --privileged -v /var/log/mesos:/var/log/mesos -v /var/lib/mesos:/var/lib/mesos -e "LOGSTASH_URI=${logstash_uri}" -e "NODE_TYPE=mesos_agent" "${filebeat_image}"
+        ExecStart=/bin/sh -c "docker run --rm --name %p --privileged -v /var/log/mesos:/var/log/mesos -v /var/lib/mesos:/var/lib/mesos -e "LOGSTASH_URI=${logstash_uri}" -e "NODE_TYPE=mesos_agent" ${filebeat_image}"
         ExecStop=/bin/sh -c "docker stop %p"
         RestartSec=5
         Restart=always
@@ -63,7 +63,7 @@ coreos:
         ExecStartPre=-/usr/bin/docker kill sysdig-agent
         ExecStartPre=-/usr/bin/docker rm sysdig-agent
         ExecStartPre=/usr/bin/docker pull sysdig/agent
-        ExecStart=/usr/bin/docker run --name sysdig-agent --privileged --net host --pid host -e ACCESS_KEY=${sysdig_access_key} -e TAGS=NodeType:Agent -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro sysdig/agent
+        ExecStart=/usr/bin/docker run --name sysdig-agent --privileged --net host --pid host -e ACCESS_KEY=${sysdig_access_key} -e TAGS=NodeType:Agent,dcosName:${dcos_name} -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro sysdig/agent
         ExecStop=/usr/bin/docker stop sysdig-agent
     - name: dcos-config-script.service
       drop-ins:
