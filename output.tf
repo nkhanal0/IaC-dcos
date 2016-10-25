@@ -23,7 +23,7 @@ output "public_agent_ids" {
 }
 
 output "dcos_url" {
-  value = "http://${aws_alb.master.dns_name}"
+  value = "${trimspace(null_resource.intermediates.triggers.dcos_url)}"
 }
 
 output "bootstrap_ip" {
@@ -64,6 +64,7 @@ resource "null_resource" "intermediates" {
   triggers = {
     agent_ips = "${file("${path.root}/agent_ips.txt")}"
     public_agent_ids = "${file("${path.root}/public_agent_ids.txt")}"
+    dcos_url = "http://${aws_alb.master.dns_name}"
   }
 }
 
