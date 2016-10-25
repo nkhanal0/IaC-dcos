@@ -27,6 +27,4 @@ pwd
 sleep 10
 echo $basepath
 cd $basepath
-dcos config show core.dcos_acs_token > dcos_acs_token.txt
 echo dcos_url = \"http://${master_alb_dns_name}\" >> $HOME/terraform.out
-echo dcos_acs_token = \"$(cat dcos_acs_token.txt)\" >> $HOME/terraform.out

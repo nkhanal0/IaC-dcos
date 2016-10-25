@@ -26,10 +26,6 @@ output "dcos_url" {
   value = "http://${aws_alb.master.dns_name}"
 }
 
-output "dcos_acs_token" {
-  value = "${trimspace(null_resource.intermediates.triggers.dcos_acs_token)}"
-}
-
 output "bootstrap_ip" {
   value = "${aws_instance.bootstrap.private_ip}"
 }
@@ -68,7 +64,6 @@ resource "null_resource" "intermediates" {
   triggers = {
     agent_ips = "${file("${path.root}/agent_ips.txt")}"
     public_agent_ids = "${file("${path.root}/public_agent_ids.txt")}"
-    dcos_acs_token = "${file("${path.root}/dcos_acs_token.txt")}"
   }
 }
 
