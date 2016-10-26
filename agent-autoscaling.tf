@@ -55,3 +55,21 @@ resource "aws_autoscaling_group" "dcos_agent_asg" {
     create_before_destroy = true
   }
 }
+
+data "template_file" "autoscaling_group_public_agent_instances_bash" {
+  template = "${file("${path.module}/files/bash/autoscaling_group_instances.bash.tpl")}"
+  vars {
+    public_agent_autoscaling_group_name = "${aws_autoscaling_group.dcos_public_agent_asg.name}"
+    private_agent_autoscaling_group_name = "${aws_autoscaling_group.dcos_agent_asg.name}"
+    instance_id_output_file_name = "public_agent_ids.txt"
+  }
+}
+
+resource "null_resource" "retrieve-autoscaling-group-instances" {
+  provisioner "local-exec" {
+    command = "sudo easy_install awscli"
+  }
+  provisioner "local-exec" {
+    command = "${data.template_file.autoscaling_group_public_agent_instances_bash.rendered}"
+  }
+}
