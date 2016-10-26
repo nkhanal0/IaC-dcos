@@ -42,7 +42,8 @@ coreos:
         ExecStartPre=-/bin/sh -c "docker kill %p"
         ExecStartPre=-/bin/sh -c "docker rm -f %p 2> /dev/null"
         ExecStartPre=/bin/sh -c "docker pull ${filebeat_image}"
-        ExecStart=/bin/sh -c "docker run --rm --name %p --privileged -v /var/log/mesos:/var/log/mesos -v /var/lib/mesos:/var/lib/mesos -e "LOGSTASH_URI=${logstash_uri}" -e "NODE_TYPE=mesos_agent" ${filebeat_image}"
+        ExecStartPre=/bin/sh -c "docker run --rm --name %p -d --privileged -v /var/log/mesos:/var/log/mesos -v /var/lib/mesos:/var/lib/mesos -e "LOGSTASH_URI=${logstash_uri}" -e "NODE_TYPE=mesos_agent" ${filebeat_image}"
+        ExecStart=/bin/sh -c "journalctl --since="now" -f -u dcos-3dt.service -u dcos-logrotate-agent.timer -u dcos-3dt.socket -u dcos-mesos-slave.service -u dcos-adminrouter-agent.service -u dcos-minuteman.service -u dcos-adminrouter-reload.service -u dcos-navstar.service -u dcos-adminrouter-reload.timer -u dcos-rexray.service -u dcos-cfn-signal.service -u dcos-setup.service -u dcos-download.service -u dcos-signal.timer -u dcos-epmd.service -u dcos-spartan-watchdog.service -u dcos-gen-resolvconf.service -u dcos-spartan-watchdog.timer -u dcos-gen-resolvconf.timer -u dcos-spartan.service -u dcos-link-env.service -u dcos-vol-discovery-priv-agent.service -u dcos-logrotate-agent.service | docker exec -i filebeat-docker /opt/filebeat/filebeat -v -c /opt/filebeat/filebeat.yml"
         ExecStop=/bin/sh -c "docker stop %p"
         RestartSec=5
         Restart=always
