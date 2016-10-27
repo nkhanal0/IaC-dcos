@@ -210,7 +210,7 @@ variable "jenkins_dns_record_name" {
 
 variable "filebeat_docker_image" {
   description = "Filebeat docker image form public docker registry"
-  default= "microservicestoday/filebeat"
+  default= "microservicestoday/filebeat:2.0.6"
 }
 
 variable "dcos_edition" {
