@@ -46,7 +46,7 @@ resource "aws_route53_record" "tyk_record" {
   type = "A"
 
   alias {
-    name = "${aws_alb.tyk.dns_name}"
+    name = "${lower(aws_alb.tyk.dns_name)}"
     zone_id = "${aws_alb.tyk.zone_id}"
     evaluate_target_health = false
   }

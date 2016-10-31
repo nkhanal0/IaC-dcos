@@ -45,7 +45,7 @@ resource "aws_route53_record" "jenkins_record" {
   type = "A"
 
   alias {
-    name = "${aws_alb.jenkins.dns_name}"
+    name = "${lower(aws_alb.jenkins.dns_name)}"
     zone_id = "${aws_alb.jenkins.zone_id}"
     evaluate_target_health = false
   }

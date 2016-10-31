@@ -57,7 +57,7 @@ resource "aws_route53_record" "master_record" {
   type = "A"
 
   alias {
-    name = "${aws_alb.master.dns_name}"
+    name = "${lower(aws_alb.master.dns_name)}"
     zone_id = "${aws_alb.master.zone_id}"
     evaluate_target_health = false
   }
