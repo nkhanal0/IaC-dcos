@@ -1,5 +1,21 @@
 #cloud-config
 
+write_files:
+  - path: "/var/tmp/dragent.yaml"
+    permissions: "777"
+    owner: "root"
+    content: |
+      customerid: ${sysdig_access_key}
+      tags: NodeType:Agent,dcosName:${dcos_name}
+      app_checks:
+        - name: mesos-slave
+          check_module: mesos_slave
+          pattern:
+            comm: mesos-slave
+          interval: 30
+          conf:
+            url: "http://$private_ipv4:{port}"
+
 coreos:
   etcd2:
     discovery: https://discovery.etcd.io/a8b57a19287d1030ff94693ad5fab642
@@ -64,7 +80,7 @@ coreos:
         ExecStartPre=-/usr/bin/docker kill sysdig-agent
         ExecStartPre=-/usr/bin/docker rm sysdig-agent
         ExecStartPre=/usr/bin/docker pull sysdig/agent
-        ExecStart=/usr/bin/docker run --name sysdig-agent --privileged --net host --pid host -e ACCESS_KEY=${sysdig_access_key} -e TAGS=NodeType:Agent,dcosName:${dcos_name} -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro sysdig/agent
+        ExecStart=/usr/bin/docker run  --name sysdig-agent --privileged --net host --pid host -v /var/tmp/dragent.yaml:/opt/draios/etc/dragent.yaml -v /var/run/docker.sock:/host/var/run/docker.sock -v /dev:/host/dev -v /proc:/host/proc:ro -v /boot:/host/boot:ro -v /lib/modules:/host/lib/modules:ro -v /usr:/host/usr:ro sysdig/agent
         ExecStop=/usr/bin/docker stop sysdig-agent
     - name: dcos-config-script.service
       drop-ins:
