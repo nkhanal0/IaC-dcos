@@ -14,6 +14,14 @@ output "private_secondary_subnet_id" {
   value = "${aws_subnet.private-secondary.id}"
 }
 
+output "public_primary_subnet_id" {
+  value = "${aws_subnet.public-primary.id}"
+}
+
+output "public_secondary_subnet_id" {
+  value = "${aws_subnet.public-secondary.id}"
+}
+
 output "private_subnet_availability_zone" {
   value = "${aws_subnet.private-primary.availability_zone}"
 }
@@ -32,6 +40,10 @@ output "bootstrap_ip" {
 
 output "private_security_group_id" {
   value = "${aws_security_group.private.id}"
+}
+
+output "public_security_group_id" {
+  value = "${aws_security_group.public.id}"
 }
 
 output "nat_gateway_public_ip" {
