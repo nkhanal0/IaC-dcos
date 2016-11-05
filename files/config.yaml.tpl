@@ -1,0 +1,19 @@
+bootstrap_url: http://${bootstrap_url}:9999
+cluster_name: ${dcos_cluster_name}
+exhibitor_storage_backend: aws_s3
+exhibitor_explicit_keys: 'false'
+aws_region: ${aws_region}
+s3_bucket: ${s3_bucket}
+s3_prefix: exhibitor
+log_directory: /genconf/logs
+ip_detect_filename: /genconf/ip-detect
+master_discovery: master_http_loadbalancer
+exhibitor_address: ${master_lb_dns}
+num_masters: ${master_count}
+resolvers:
+- 8.8.4.4
+- 8.8.8.8
+ssh_key_path: '/genconf/ssh_key'
+ssh_port: 22
+ssh_user: core
+oauth_enabled: 'false'
