@@ -6,6 +6,7 @@ resource "aws_instance" "bootstrap" {
   vpc_security_group_ids = ["${aws_security_group.private.id}"]
   subnet_id = "${aws_subnet.private-primary.id}"
   source_dest_check = false
+  iam_instance_profile = "${aws_iam_instance_profile.bootstrap.name}"
 
   tags {
     Name = "${var.pre_tag}-Bootstrap-${var.post_tag}"
@@ -15,22 +16,10 @@ resource "aws_instance" "bootstrap" {
   }
 
   root_block_device {
-    volume_size = "10"
+    volume_size = "32"
     delete_on_termination = true
   }
 
-  provisioner "local-exec" {
-    command = "echo BOOTSTRAP=\"${aws_instance.bootstrap.private_ip}\" >> ips.txt"
-  }
-  provisioner "local-exec" {
-    command = "echo CLUSTER_NAME=\"${var.dcos_cluster_name}\" >> ips.txt"
-  }
-  provisioner "local-exec" {
-    command = "echo DCOS_USERNAME=\"${var.dcos_username}\" >> ips.txt"
-  }
-  provisioner "local-exec" {
-    command = "echo 77faa1f1-80aa-4a74-7bd1-53e90b8979c5 > UUID"
-  }
   provisioner "local-exec" {
     command = "echo 'private_security_group_id = \"${aws_security_group.private.id}\"' >> ../terraform.out"
   }
@@ -49,40 +38,59 @@ resource "aws_instance" "bootstrap" {
   provisioner "local-exec" {
     command = "echo 'bootstrap_ip = \"${aws_instance.bootstrap.private_ip}\"' >> ../terraform.out"
   }
+
+  connection {
+    user = "centos"
+    agent = true
+  }
 }
 
+data "template_file" "dcos_configuration" {
+  template = "${file("${path.module}/files/config.yaml.tpl")}"
+  vars {
+    bootstrap_url = "${aws_instance.bootstrap.private_ip}"
+    dcos_cluster_name = "${var.dcos_cluster_name}"
+    master_lb_dns = "${aws_alb.master.dns_name}"
+    master_count = "${var.dcos_master_count}"
+    aws_region = "${var.aws_region}"
+    s3_bucket = "${aws_s3_bucket.cluster-storage.bucket}"
+  }
+}
 
-resource "null_resource" "dcos-installation" {
-  depends_on = ["aws_route_table_association.availability-zone-private-primary", "aws_route_table_association.availability-zone-public-secondary", "aws_instance.master"]
+resource "null_resource" "download-dcos-installer" {
+  depends_on = ["aws_route_table_association.availability-zone-private-primary"]
   connection {
     host = "${aws_instance.bootstrap.private_ip}"
     user = "centos"
     agent = true
   }
-
   provisioner "remote-exec" {
     inline = [
       "curl ${var.dcos_installer_url["${var.dcos_edition}"]} > dcos_generate_config.sh",
       "rm -r $HOME/genconf; mkdir $HOME/genconf"
     ]
   }
+}
+
+resource "null_resource" "dcos-installation" {
+  // Remove first 2 dependencies
+  depends_on = ["null_resource.download-dcos-installer","aws_autoscaling_group.master"]
+  connection {
+    host = "${aws_instance.bootstrap.private_ip}"
+    user = "centos"
+    agent = true
+  }
 
   provisioner "local-exec" {
-    command = "${path.module}/make-files.sh"
+    command = "echo '${data.template_file.dcos_configuration.rendered}' > ${path.module}/config.yaml"
   }
-  provisioner "local-exec" {
-    command = "sed -i -e '/^- *$/d' ./config.yaml"
-  }
+
   provisioner "file" {
-    source = "./UUID"
-    destination = "$HOME/UUID"
-  }
-  provisioner "file" {
-    source = "./ip-detect"
+    source = "${path.module}/files/ip-detect"
     destination = "$HOME/genconf/ip-detect"
   }
   provisioner "file" {
-    source = "./config.yaml"
+    source = "${path.module}/config.yaml"
     destination = "$HOME/genconf/config.yaml"
   }
   provisioner "remote-exec" {
@@ -90,12 +98,8 @@ resource "null_resource" "dcos-installation" {
       "curl -fsSL https://get.docker.com/ | sh",
       "sudo service docker start",
       "sudo systemctl enable docker",
-      "sudo bash dcos_generate_config.sh --hash-password ${var.dcos_password} > secret_hash",
-      "sed -i -n '$p' secret_hash",
-      "echo 'superuser_password_hash:' $(cat $HOME/secret_hash) >> $HOME/genconf/config.yaml",
       "sudo bash $HOME/dcos_generate_config.sh",
       "sudo docker run --restart=always -d -p 9999:80 -v $HOME/genconf/serve:/usr/share/nginx/html:ro nginx 2>/dev/null"
     ]
   }
 }
-

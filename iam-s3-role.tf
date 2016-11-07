@@ -74,3 +74,7 @@ resource "aws_iam_instance_profile" "s3_profile_public_agent" {
   roles = ["${aws_iam_role.s3_role.name}"]
 }
 
+resource "aws_iam_instance_profile" "bootstrap" {
+  name = "${var.pre_tag}_bootstrap_${var.post_tag}"
+  roles = ["${aws_iam_role.s3_role.name}"]
+}
