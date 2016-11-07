@@ -23,10 +23,10 @@ aws_ssl_certificate_arn_id = ""     /* ARN of SSL certificate created by AWS Cer
 
 /* DCOS Configuration */
 dcos_cluster_name = "Dummy-Prod"
-dcos_master_count = "3"
-agent_asg_desired_capacity = "3"
-public_agent_asg_desired_capacity = "3"
-dcos_timezone = "UTC"               /* e.g. UTC or Asia/Singapore or Asia/Tokyo */
+dcos_master_count = "3"                   /* DC/OS Master count */
+agent_asg_desired_capacity = "3"          /* DC/OS Private Agent count */
+public_agent_asg_desired_capacity = "3"   /* DC/OS Public Agent count */
+dcos_timezone = "UTC"                     /* e.g. UTC or Asia/Singapore or Asia/Tokyo */
 dcos_cli_download_url = "http://d3evwvza4ryf1d.cloudfront.net/dcos/dcos-cli/dcos"
 dcos_installer_url = {
     community = "https://downloads.dcos.io/dcos/stable/dcos_generate_config.sh"

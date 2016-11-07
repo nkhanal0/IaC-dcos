@@ -36,6 +36,11 @@ variable "dcos_agent_disk_size" {
   default = "256"
 }
 
+variable "nfs_server_disk_size" {
+  description = "The size of NFS Server root block device disk in GB"
+  default = "256"
+}
+
 variable "coreos_amis" {
   description = "CoreOS AMIs by region used in master and agent nodes"
   /* v1068.10.0, released 08/26/2016 */
@@ -131,6 +136,7 @@ variable "instance_type" {
     "master" = "m4.2xlarge"
     "public-agent" = "m4.2xlarge"
     "agent" = "m4.2xlarge"
+    "nfs-server" = "t2.micro"
   }
 }
 
@@ -138,6 +144,25 @@ variable "aws_ssl_certificate_arn_id" {
   description = "ARN ID of the ssl certificate created in Amazon"
 }
 
+variable "master_asg_max_size" {
+  description = "The maximum size of the Master auto-scaling group"
+  default = "5"
+}
+
+variable "master_asg_min_size" {
+  description ="The minimum size of the Master auto-scale group"
+  default = "1"
+}
+
+variable "master_asg_health_check_grace_period" {
+  description = "Time after instance comes into service before checking health."
+  default = "300"
+}
+
+variable "master_asg_health_check_type" {
+  description = "EC2 or ELB. Controls how health checking is done."
+  default = "EC2"
+}
 
 variable "agent_asg_max_size" {
   description = "The maximum size of the auto scale group (Max agent count)."
