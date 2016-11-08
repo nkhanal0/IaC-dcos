@@ -29,7 +29,7 @@ resource "aws_autoscaling_group" "dcos_public_agent_asg" {
 
   launch_configuration = "${aws_launch_configuration.dcos_public_agent_lc.name}"
 
-  vpc_zone_identifier = ["${aws_subnet.private-primary.id},${aws_subnet.private-secondary.id}"]
+  vpc_zone_identifier = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
 
   target_group_arns = ["${aws_alb_target_group.dcos-public-agents.arn}","${aws_alb_target_group.jenkins-agents.arn}"]
 

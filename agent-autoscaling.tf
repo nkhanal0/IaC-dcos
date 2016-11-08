@@ -25,7 +25,7 @@ resource "aws_autoscaling_group" "dcos_agent_asg" {
   health_check_type = "${var.agent_asg_health_check_type}"
   health_check_grace_period = "${var.agent_asg_health_check_grace_period}"
   launch_configuration = "${aws_launch_configuration.dcos_agent_lc.name}"
-  vpc_zone_identifier = ["${aws_subnet.private-primary.id},${aws_subnet.private-secondary.id}"]
+  vpc_zone_identifier = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
 
   tag {
     key = "Name"

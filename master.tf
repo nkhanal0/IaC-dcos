@@ -41,7 +41,7 @@ resource "aws_autoscaling_group" "master" {
   health_check_type = "${var.master_asg_health_check_type}"
   health_check_grace_period = "${var.master_asg_health_check_grace_period}"
   launch_configuration = "${aws_launch_configuration.master.name}"
-  vpc_zone_identifier = ["${aws_subnet.private-primary.id},${aws_subnet.private-secondary.id}"]
+  vpc_zone_identifier = ["${aws_subnet.private-primary.id}","${aws_subnet.private-secondary.id}"]
   target_group_arns = [
     "${aws_alb_target_group.master_https.arn}",
     "${aws_alb_target_group.master_http_80.arn}",
@@ -72,6 +72,27 @@ resource "aws_autoscaling_group" "master" {
 
   lifecycle {
     create_before_destroy = true
+  }
+}
+data "template_file" "master_asg_instances_bash" {
+  template = "${file("${path.module}/files/bash/master_asg_instances.bash.tpl")}"
+  vars {
+    module_path = "${path.module}"
+    master_asg_name = "${aws_autoscaling_group.master.name}"
+  }
+}
+resource "null_resource" "retrieve_master_asg_instances" {
+  provisioner "local-exec" {
+    command = "sudo easy_install awscli"
+  }
+  provisioner "local-exec" {
+    command = "${data.template_file.master_asg_instances_bash.rendered}"
+  }
+}
+resource "null_resource" "master_ips" {
+  depends_on = ["null_resource.retrieve_master_asg_instances"]
+  triggers = {
+    value = "${file("${path.module}/master_ips.txt")}"
   }
 }
 
