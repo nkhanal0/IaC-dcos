@@ -181,6 +181,6 @@ coreos:
         [Unit]
         Description=Set the time zone
         [Service]
-        ExecStart=/usr/bin/timedatectl set-timezone ${dcos_timezone}
+        ExecStart=/usr/bin/timedatectl set-timezone ${dcos_timezone} ; /usr/bin/timedatectl set-ntp true
         RemainAfterExit=yes
         Type=oneshot
