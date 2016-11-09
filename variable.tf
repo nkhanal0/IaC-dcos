@@ -221,18 +221,6 @@ variable "domain_name" {
   description = "Name of the domain where record(s) need to create"
 }
 
-variable "master_dns_record_name" {
-  description = "Name of the record that you want to create for load balancer"
-}
-
-variable "tyk_dns_record_name" {
-  description = "Name of the record that you want to create for load balancer"
-}
-
-variable "jenkins_dns_record_name" {
-  description = "Name of the record that you want to create for load balancer"
-}
-
 variable "filebeat_docker_image" {
   description = "Filebeat docker image form public docker registry"
   default= "microservicestoday/filebeat:2.0.6"

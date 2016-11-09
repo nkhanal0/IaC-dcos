@@ -191,11 +191,10 @@ resource "aws_alb_listener" "master_http_5050" {
     type = "forward"
   }
 }
-
 /* Route 53 */
 resource "aws_route53_record" "master_record" {
   zone_id = "${var.hosted_zone_id}"
-  name = "${var.master_dns_record_name}.${var.domain_name}"
+  name = "dcos-${var.pre_tag}.${var.domain_name}"
   type = "A"
 
   alias {

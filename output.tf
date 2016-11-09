@@ -55,7 +55,11 @@ output "elb_logstash_id" {
 }
 
 output "jenkins_url" {
-  value = "https://${var.jenkins_dns_record_name}.${var.domain_name}"
+  value = "https://${aws_route53_record.jenkins_record.name}"
+}
+
+output "tyk_url" {
+  value = "https://${aws_route53_record.tyk_record.name}"
 }
 
 output "s3_bucket_name" {

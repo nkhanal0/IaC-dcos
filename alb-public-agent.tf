@@ -42,7 +42,7 @@ resource "aws_alb_listener" "front_end_tyk" {
 
 resource "aws_route53_record" "tyk_record" {
   zone_id = "${var.hosted_zone_id}"
-  name = "${var.tyk_dns_record_name}.${var.domain_name}"
+  name = "tyk-${var.pre_tag}.${var.domain_name}"
   type = "A"
 
   alias {

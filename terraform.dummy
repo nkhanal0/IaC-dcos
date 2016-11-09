@@ -15,9 +15,6 @@ key_pair_name = "dummy"             /* key_pair_name should be exactly as it is 
 /* Route 53 Configuration */
 hosted_zone_id = "DUMMY"            /* ID of the Hosted Zone for above domain within Route53 */
 domain_name = "dummy.com"           /* your domain name */
-master_dns_record_name = "dummy"    /* eg: dcos-test, then record name would be dcos-test.dummy.com */
-tyk_dns_record_name = "dummy"       /* eg: dcos-app, then record name would be dcos-app.dummy.com */
-jenkins_dns_record_name = "dummy"   /* eg: dcos-jenkins, then record name would be dcos-jenkins.dummy.com */
 
 aws_ssl_certificate_arn_id = ""     /* ARN of SSL certificate created by AWS Certificate Manager */
 

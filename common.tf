@@ -3,7 +3,7 @@ resource "null_resource" "intermediates" {
   triggers = {
     agent_ips = "${file("${path.root}/agent_ips.txt")}"
     public_agent_ids = "${file("${path.root}/public_agent_ids.txt")}"
-    dcos_url = "http://${aws_alb.master.dns_name}"
+    dcos_url = "https://${aws_route53_record.master_record.name}"
   }
 }
 
