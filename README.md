@@ -1,4 +1,4 @@
-### IaC: DCOS
+# IaC: DCOS
 This terraform script will setup the DCOS cluster in AWS.
  - Bootstrap Node (CentOS)
  - Master and Agent Nodes (CoreOS)
@@ -58,7 +58,6 @@ export AWS_DEFAULT_REGION="ap-northeast-1"
 [terraform-install]: <https://www.terraform.io/intro/getting-started/install.html>
 
 #### Contributing
-
 1. Make a feature branch: __git checkout -b your-username/your-feature__
 2. Follow Terraform Style Guide
 3. Make your feature. Keep things tidy so you have one commit per self-contained change (squashing can help).
@@ -72,4 +71,3 @@ self-contained feature.  If you need to make changes from feedback, make
 the changes in place rather than layering on commits (use interactive
 rebase to edit your earlier commits).  Then use __git push --force
 origin your-feature__ to update your pull request.
-
