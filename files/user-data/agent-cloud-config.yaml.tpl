@@ -41,7 +41,7 @@ coreos:
       command: start
       content: |
        [Mount]
-       What=${nfs_server_ip}:/home/core/jenkins_nfs
+       What=${nfs_server_ip}:/var/nfs
        Where=/var/jenkins_nfs
        Type=nfs
     - name: |-
