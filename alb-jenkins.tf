@@ -41,7 +41,7 @@ resource "aws_alb_listener" "front_end_jenkins" {
 }
 resource "aws_route53_record" "jenkins_record" {
   zone_id = "${var.hosted_zone_id}"
-  name = "${var.jenkins_dns_record_name}.${var.domain_name}"
+  name = "jenkins-${var.pre_tag}.${var.domain_name}"
   type = "A"
 
   alias {
